@@ -1,0 +1,33 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+.row{
+    justify-content: center;
+}
+
+.card{
+    margin-top: 50px;
+    border: 1px solid black;
+    /* width: 460px; */
+    height: 460px;
+    justify-content: center;
+}
+.col-md-6{
+    width: 36%;
+}
+form{
+    padding: 35px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+button{
+    margin-top: 20px;
+    width: 50%;
+}
+
+a{
+    margin-left: 30px;
+}

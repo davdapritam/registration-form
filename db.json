@@ -1,0 +1,30 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "name": "davdapritam",
+      "email": "dpdavdapritam@gmail.com",
+      "mobile": "7359487834",
+      "address": "Home"
+    },
+    {
+      "id": 4,
+      "name": "davdapritam",
+      "email": "davdapritam@gmail.com",
+      "mobile": "7359487834",
+      "address": "Home"
+    }
+  ],
+  "SignUP": [
+    {
+      "name": "acs",
+      "email": "acs@gmail.com",
+      "password": "123456789",
+      "id": 3
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}
