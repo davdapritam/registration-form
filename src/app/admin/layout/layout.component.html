@@ -1,0 +1,45 @@
+<mat-toolbar class="mat-elevation-z8">
+    <button mat-icon-button (click)="changeDrawerState()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button> -->
+</mat-toolbar>
+
+<mat-drawer-container class="layout-container" *ngIf="{isMobile: isMobile$ | async, isOpen: isOpen$ | async} as data" (backdropClick)="changeDrawerState()">
+
+    <mat-drawer [mode]="data.isMobile?.mobile ? 'over' : 'side'" [opened]="!data.isOpen" [style.width]="data.isOpen ? '0px' : '230px'">
+
+      <mat-selection-list [multiple]="false">
+        <mat-list-option *ngFor="let routerData of routerDatas" [routerLinkActive]="'primary-color'" [routerLinkActiveOptions]="{exact: true}" (click)="navigateToMenu(routerData.routerLink, data.isMobile?.mobile)">
+          {{ routerData.displayName }}
+        </mat-list-option>
+
+        <mat-list-option [matMenuTriggerFor]="reports">Reports</mat-list-option>
+
+        <mat-menu #reports="matMenu">
+          <button mat-menu-item [routerLinkActive]="'primary-color'" [routerLinkActiveOptions]="{exact: true}" (click)="navigateToMenu(['reports', 'product'], data.isMobile?.mobile)">Products</button>
+          <button mat-menu-item [routerLinkActive]="'primary-color'" [routerLinkActiveOptions]="{exact: true}" (click)="navigateToMenu(['reports', 'top-10-buyer'], data.isMobile?.mobile)">Top 10 Buyer</button>
+        </mat-menu>
+
+        <mat-list-option (click)="navigateToMenu(null, data.isMobile?.mobile)">
+          Logout
+        </mat-list-option>
+
+      </mat-selection-list>
+
+    </mat-drawer>
+
+    <mat-drawer-content [style.margin.px]="16">
+
+        <router-outlet></router-outlet>
+
+    </mat-drawer-content>
+</mat-drawer-container>
+

@@ -1,0 +1,171 @@
+<section fxLayout="column" fxLayoutAlign.gt-sm="start center" fxLayoutAlign="center center" fxFlex="100%" [style.paddingLeft.px]="8" [style.paddingRight.px]="8">
+    <form fxLayout="column" fxLayoutAlign.gt-sm="start center" fxLayoutGap="16px" [formGroup]="priceFG" [style.paddingBottom.px]="64" (ngSubmit)="update()" [style.width.%]="100">
+        <ng-container formArrayName="prices">
+            <ng-container *ngFor="let price of pricesFA; let i = index; let first = first; let last = last">
+                <mat-card [formGroup]="price" *ngIf="(isMobile$ | async) as isMobile" [style.width]="isMobile.mobile ? '100%' : '650px'" [class.mat-elevation-z0]="isMobile.mobile" [class.card-border]="isMobile.mobile">
+                    <mat-card-title fxLayout="row" fxLayoutAlign="end center">
+                        <label *ngIf="first" fxFlex="100%"> Product Prices </label>
+                        <!-- <button mat-icon-button color="warn" fxFlex="60px" [style.float]="'right'" [disabled]="first" (click)="removePriceFG(i)">
+                            <mat-icon>remove_circle_outline</mat-icon>
+                        </button> -->
+                    </mat-card-title>
+                    <mat-divider></mat-divider>
+                    <mat-card-content>
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign.gt-sm="start center" fxLayoutGap.gt-sm="16px" fxLayoutGap.sm="16px">
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>COD</mat-label>
+                                <input matInput type="number" formControlName="cod">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>codTCS</mat-label>
+                                <input matInput type="number" formControlName="codTCS">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>codTDS</mat-label>
+                                <input matInput type="number" formControlName="codTDS">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign.gt-sm="start center" fxLayoutGap.gt-sm="16px" fxLayoutGap.sm="16px">
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>codFinal</mat-label>
+                                <input matInput type="number" formControlName="codFinal">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>codComission</mat-label>
+                                <input matInput type="number" formControlName="codComission">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>codGSTOnProduct</mat-label>
+                                <input matInput type="number" formControlName="codGSTOnProduct">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign.gt-sm="start center" fxLayoutGap.gt-sm="16px" fxLayoutGap.sm="16px">
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>codGSTOnComission</mat-label>
+                                <input matInput type="number" formControlName="codGSTOnComission">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>sevenDays</mat-label>
+                                <input matInput type="number" formControlName="sevenDays">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>sevenDaysTCS</mat-label>
+                                <input matInput type="number" formControlName="sevenDaysTCS">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign.gt-sm="start center" fxLayoutGap.gt-sm="16px" fxLayoutGap.sm="16px">
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>sevenDaysTDS</mat-label>
+                                <input matInput type="number" formControlName="sevenDaysTDS">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>sevenDaysFinal</mat-label>
+                                <input matInput type="number" formControlName="sevenDaysFinal">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>sevenDaysComission</mat-label>
+                                <input matInput type="number" formControlName="sevenDaysComission">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign.gt-sm="start center" fxLayoutGap.gt-sm="16px" fxLayoutGap.sm="16px">
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>sevenDaysGSTOnProduct</mat-label>
+                                <input matInput type="number" formControlName="sevenDaysGSTOnProduct">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>sevenDaysGSTOnComission</mat-label>
+                                <input matInput type="number" formControlName="sevenDaysGSTOnComission">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>thirtyDays</mat-label>
+                                <input matInput type="number" formControlName="thirtyDays">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign.gt-sm="start center" fxLayoutGap.gt-sm="16px" fxLayoutGap.sm="16px">
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>thirtyDaysTCS</mat-label>
+                                <input matInput type="number" formControlName="thirtyDaysTCS">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>thirtyDaysTDS</mat-label>
+                                <input matInput type="number" formControlName="thirtyDaysTDS">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>thirtyDaysFinal</mat-label>
+                                <input matInput type="number" formControlName="thirtyDaysFinal">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign.gt-sm="start center" fxLayoutGap.gt-sm="16px" fxLayoutGap.sm="16px">
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>thirtyDaysComission</mat-label>
+                                <input matInput type="number" formControlName="thirtyDaysComission">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>thirtyDaysGSTOnProduct</mat-label>
+                                <input matInput type="number" formControlName="thirtyDaysGSTOnProduct">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="100" fxFlex.gt-sm="calc(1em - 16px)">
+                                <mat-label>thirtyDaysGSTOnComission</mat-label>
+                                <input matInput type="number" formControlName="thirtyDaysGSTOnComission">
+                                <!-- <mat-hint>Hint</mat-hint> -->
+                                <!-- <mat-error>{{emailErrorFn()}}</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions fxLayout="row" fxLayoutGap="10px" *ngIf="last">
+                        <!-- <button mat-button type="button" color="primary" [routerLink]="'registration'">Create Account</button> -->
+                        <button mat-button [routerLink]="['/', 'admin', 'layout', 'product']">
+                            Cancel
+                        </button>
+                        <button mat-flat-button type="submit" color="primary">
+                            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+                                <span> Update </span>
+                                <mat-spinner color="accent" *ngIf="isApiCalling" [diameter]="20"></mat-spinner>
+                            </div>
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </ng-container>
+        </ng-container>
+    </form>
+</section>

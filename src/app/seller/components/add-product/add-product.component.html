@@ -1,0 +1,320 @@
+<div class="container-fluid d-flex justify-content-center align-items-center">
+    <div id="addProduct" class="bs-stepper">
+        <div class="bs-stepper-header">
+            <div class="step" data-target="#productDetails">
+                <button class="step-trigger">
+          <span class="bs-stepper-circle" [ngClass]="{'success-header': productDetailsForm.valid}"> <i
+              class='fa fa-info-circle'></i></span>
+          <span class="bs-stepper-label text-wrap">Product Details</span>
+        </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#priceDetails" (click)="addProduct()">
+                <button class="step-trigger">
+          <span class="bs-stepper-circle" [ngClass]="{'success-header': priceDetailsFormGroup.valid}"> <i
+              class='fa fa-money'></i></span>
+          <span class="bs-stepper-label text-wrap">Price Details</span>
+        </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#productImage" (click)="addPrice()">
+                <button class="step-trigger">
+          <span class="bs-stepper-circle"> <i class='fa fa-file-image-o'></i></span>
+          <span class="bs-stepper-label text-wrap">Product Image</span>
+        </button>
+            </div>
+        </div>
+        <div class="bs-stepper-content">
+            <div id="productDetails" class="content">
+                <div class="shadow-lg p-4 rounded">
+                    <form [formGroup]="productDetailsForm">
+                        <div class="row">
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="productCategory" class="label-control mb-1">Product Category</label>
+                                <div *ngIf="productCategoryList && productCategoryList.length > 0">
+                                    <select class="form-select" aria-label="Product Category" formControlName="productCategory" (change)="selectProductCategory($event)">
+                                      <ng-container *ngFor="let category of productCategoryList;">
+                                        <option [value]="category._id">{{category.name}}</option>
+                                      </ng-container>
+                                    </select>
+                                </div>
+                                <div *ngIf="productDetailsForm.controls['productCategory'].invalid && productDetailsForm.controls['productCategory'].touched">
+                                    <div *ngIf="productDetailsForm.controls['productCategory'].errors" class="text-danger text-end">
+                                        {{errorHandler('Product Category',productDetailsForm.controls['productCategory'].errors)}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="productName" class="label-control mb-1">Product Name</label>
+                                <span class="float-end text-success cursor-pointer" *ngIf="customQuality" (click)="showQualityList()">Back To List</span>
+                                <div *ngIf="productQualityList && productQualityList.length > 0 && !customQuality;else insertCustomQuality">
+                                    <ng-select formControlName="productName" (change)="selectProductQuality($event)">
+                                        <ng-option *ngFor="let quality of productQualityList" [value]="quality._id">
+                                            {{quality.name}}</ng-option>
+                                    </ng-select>
+                                </div>
+                                <ng-template #insertCustomQuality>
+                                    <input *ngIf="customQuality" type="text" formControlName="customQuality" class="form-control" [ngClass]="{'is-invalid': productDetailsForm.controls['customQuality'] && productDetailsForm.controls['customQuality'].invalid && productDetailsForm.controls['customQuality'].touched,
+                                        'is-valid' : productDetailsForm.controls['customQuality'] && !productDetailsForm.controls['customQuality'].invalid && productDetailsForm.controls['customQuality'].touched }" maxlength="30">
+                                    <div *ngIf="productDetailsForm.controls['customQuality'] && productDetailsForm.controls['customQuality'].invalid && productDetailsForm.controls['customQuality'].touched">
+                                        <div *ngIf="productDetailsForm.controls['customQuality'] && productDetailsForm.controls['customQuality'].errors" class="text-danger text-end">
+                                            {{errorHandler('Product Quality',productDetailsForm.controls['customQuality'].errors)}}
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                            <div class="d-flex flex-row">
+                                <div class="form-group mb-3 col-12 col-md-6" [style.paddingRight.px]="12">
+                                    <label for="productQuality" class="label-control mb-1">Product Quality</label>
+                                    <input type="text" formControlName="productQuality" class="form-control" [ngClass]="{'is-invalid': productDetailsForm.controls['productQuality'].invalid && productDetailsForm.controls['productQuality'].touched,
+                                            'is-valid' : !productDetailsForm.controls['productQuality'].invalid && productDetailsForm.controls['productQuality'].touched }" maxlength="16">
+                                    <div *ngIf="productDetailsForm.controls['productQuality'].invalid && productDetailsForm.controls['productQuality'].touched">
+                                        <div *ngIf="productDetailsForm.controls['productQuality'].errors" class="text-danger text-end">
+                                            {{errorHandler('Product Name',productDetailsForm.controls['productQuality'].errors)}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3 col-12 col-md-6" [style.paddingLeft.px]="12">
+                                    <label for="description" class="label-control mb-1">Product Description</label>
+                                    <input type="text" formControlName="description" class="form-control" [ngClass]="{'is-invalid': productDetailsForm.controls['description'].invalid && productDetailsForm.controls['description'].touched,
+                                            'is-valid' : !productDetailsForm.controls['description'].invalid && productDetailsForm.controls['description'].touched }" maxlength="200">
+                                    <div *ngIf="productDetailsForm.controls['description'].invalid && productDetailsForm.controls['description'].touched">
+                                        <div *ngIf="productDetailsForm.controls['description'].errors" class="text-danger text-end">
+                                            {{errorHandler('Product Description',productDetailsForm.controls['description'].errors)}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row">
+                                <div class="form-group mb-3 col-12 col-md-6" [style.paddingRight.px]="12">
+                                    <label for="products" class="label-control mb-1">Product Type</label>
+                                    <input type="text" formControlName="products" class="form-control mb-1" placeholder="Type and press enter" (keyup.enter)="addProducts($event)" maxlength="16">
+                                    <div *ngIf="productDetailsForm.controls['products'].touched && products.length < 1">
+                                        <div class="text-danger text-end">
+                                            {{errorHandler('Product Type', {required: true})}}</div>
+                                    </div>
+                                    <ng-container *ngIf="products && products.length">
+                                        <app-chips [items]=products (removeItem)="removeProducts($event)"></app-chips>
+                                    </ng-container>
+                                </div>
+                                <div class="form-group mb-3 col-12 col-md-6" [style.paddingLeft.px]="12">
+                                    <label for="colours" class="label-control mb-1">Product Colours</label>
+                                    <input type="text" formControlName="colours" class="form-control mb-1" (keyup.enter)="addColor($event)" maxlength="16">
+                                    <div *ngIf="productDetailsForm.controls['colours'].touched && colours.length < 1">
+                                        <div class="text-danger text-end">
+                                            {{errorHandler('Product Colour', {required: true})}}</div>
+                                    </div>
+                                    <ng-container *ngIf="colours && colours.length">
+                                        <app-chips [items]=colours (removeItem)="removeColour($event)"></app-chips>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row">
+                                <div class="form-group mb-3 col-12 col-md-6" [style.paddingRight.px]="12">
+                                    <label for="hsnCode" class="label-control mb-1">Product HSN Code</label>
+                                    <input type="text" formControlName="hsnCode" class="form-control" [ngClass]="{'is-invalid': productDetailsForm.controls['hsnCode'].invalid && productDetailsForm.controls['hsnCode'].touched,
+                                            'is-valid' : !productDetailsForm.controls['hsnCode'].invalid && productDetailsForm.controls['hsnCode'].touched }" maxlength="8">
+                                    <div *ngIf="productDetailsForm.controls['hsnCode'].invalid && productDetailsForm.controls['hsnCode'].touched">
+                                        <div *ngIf="productDetailsForm.controls['hsnCode'].errors" class="text-danger text-end">
+                                            {{errorHandler('Product HSN Code',productDetailsForm.controls['hsnCode'].errors)}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3 col-12 col-md-6" [style.paddingLeft.px]="12">
+                                    <label for="hsnRate" class="label-control mb-1">Product GST Rate (In %)</label>
+                                    <input type="number" formControlName="hsnRate" class="form-control" [ngClass]="{'is-invalid': productDetailsForm.controls['hsnRate'].invalid && productDetailsForm.controls['hsnRate'].touched,
+                                          'is-valid' : !productDetailsForm.controls['hsnRate'].invalid && productDetailsForm.controls['hsnRate'].touched }" maxlength="8">
+                                    <div *ngIf="productDetailsForm.controls['hsnRate'].invalid && productDetailsForm.controls['hsnRate'].touched">
+                                        <div *ngIf="productDetailsForm.controls['hsnRate'].errors" class="text-danger text-end">
+                                            {{errorHandler('Product GST Rate',productDetailsForm.controls['hsnRate'].errors)}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2 mt-3 roboto-400">
+                                <button class="btn btn-lg btn-success" type="button" (click)="addProduct()">Add Product</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="priceDetails" class="content">
+                <div class="shadow-lg p-4 rounded">
+                    <form [formGroup]="priceDetailsFormGroup">
+                        <div formArrayName="priceDetail">
+                            <div *ngFor="let prod of getProduct; let i = index" [formGroupName]="i">
+                                <h5>{{prod.get('productType')?.value}}</h5>
+                                <table class="table table-bordered table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">#</th>
+                                            <th scope="col" colspan="2" class="text-center">Duration</th>
+                                            <th scope="col" class="text-center">Your Product Price <i class="fa fa-info-circle cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluding GST" aria-hidden="true"></i>
+                                            </th>
+                                            <th scope="col" class="text-center">Product GST</th>
+                                            <th scope="col" class="text-center">1 % Comission</th>
+                                            <th scope="col" class="text-center">GST On Comission (18%)</th>
+                                            <th scope="col" class="text-center">TCS</th>
+                                            <th scope="col" class="text-center">TDS</th>
+                                            <th scope="col" class="text-center">Final</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td colspan="2">Price for Cash on Delivery</td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input (keyup)="codValueChange(prod)" inputmode="numeric" type="number" formControlName="cod" class="form-control text-center" maxlength="7">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="codGSTOnProduct" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="codComission" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="codGSTOnComission" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="codTCS" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="codTDS" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="codFinal" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td colspan="2">Price for 7 days credit</td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input (keyup)="sevenDayValueChange(prod)" inputmode="numeric" type="number" formControlName="sevenDays" class="form-control text-center" maxlength="7">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="sevenDaysGSTOnProduct" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="sevenDaysComission" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="sevenDaysGSTOnComission" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="sevenDaysTCS" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="sevenDaysTDS" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="sevenDaysFinal" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td colspan="2">Price for 30 days credit</td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input (keyup)="thirtyDayValueChange(prod)" inputmode="numeric" type="number" formControlName="thirtyDays" class="form-control text-center" maxlength="7">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="thirtyDaysGSTOnProduct" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="thirtyDaysComission" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="thirtyDaysGSTOnComission" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="thirtyDaysTCS" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="thirtyDaysTDS" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-12">
+                                                    <input type="number" readonly formControlName="thirtyDaysFinal" class="form-control text-center">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 mt-3 roboto-400">
+                            <button class="btn btn-lg btn-success" type="button" (click)="addPrice()" [disabled]="!priceDetailsFormGroup.valid">Add Price</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="productImage" class="content">
+                <div class="shadow-lg p-4 rounded">
+                    <div class="row">
+                        <div class="form-group">
+                            <h3 class="roboto-400 color-green">Drag and Drop File Here OR Browse For File</h3>
+                            <div class="d-flex flex-row">
+                                <div class="product-image-container d-flex flex-wrap flex-row justify-content-center align-items-stretch w-100">
+                                    <div *ngFor="let item of productImages; let i = index" class="image-block p-2">
+                                        <img [src]="item">
+                                        <div class="image-action d-flex justify-content-around">
+                                            <i class="fa fa-eye cursor-pointer" (click)="displayProductImage(item)" aria-hidden="true"></i>
+                                            <i class="fa fa-times cursor-pointer" (click)="removeProductImage(i)" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div class="image-block p-2" *ngIf="productImages.length <= 5">
+                                        <i class="add-product-icon fa fa-plus justify-content-center" aria-hidden="true"></i>
+                                        <input type="file" class="fileDropRef" accept="image/*" (change)="fileBrowseHandler($event, 'productImage.colour')" multiple />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 mt-3 roboto-400">
+                            <button class="btn btn-lg btn-success" type="button" (click)="uploadImages()">Add Images</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

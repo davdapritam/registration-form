@@ -1,0 +1,16 @@
+:host {
+    .section {
+        padding: 0px 16px 40px 16px;
+    }
+    mat-table {
+        mat-header-cell, mat-cell {
+            margin: 0px 4px;
+        }
+    }
+    .gray-color {
+        color: var(--themeGrey);
+    }
+    .mat-subheading-2, .mat-subheading-1 {
+        margin: 0px;
+    }
+}

@@ -1,0 +1,28 @@
+<section fxLayout="column" fxLayoutGap="16px" fxLayoutAlign.gt-sm="start center" fxLayoutAlign="center center" fxFlex="100%" [style.paddingLeft.px]="8" [style.paddingRight.px]="8">
+
+    <ng-container *ngIf="(isMobile$ | async) as isMobile">
+
+        <mat-card [style.width]="isMobile.mobile ? '100%' : '650px'" [class.mat-elevation-z0]="isMobile.mobile" [class.card-border]="isMobile.mobile">
+            <mat-card-title>Product Detail</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-card-content fxLayout="column" fxLayoutGap="4px">
+                <label class="title"> {{ productData?.product?.productName }} ({{productData?.product?.productCategory}}) </label>
+                <label> {{ productData?.product?.description }} </label>
+                <label> {{ productData?.product?.availableStock }} </label>
+                <label> {{ productData?.product?.hsnCode }} </label>
+            </mat-card-content>
+        </mat-card>
+    
+        <mat-card [style.width]="isMobile.mobile ? '100%' : '650px'" [class.mat-elevation-z0]="isMobile.mobile" [class.card-border]="isMobile.mobile">
+            <mat-card-title>Order Detail</mat-card-title>
+            <mat-divider></mat-divider>
+        </mat-card>
+    
+        <mat-card [style.width]="isMobile.mobile ? '100%' : '650px'" [class.mat-elevation-z0]="isMobile.mobile" [class.card-border]="isMobile.mobile">
+            <mat-card-title>Payment Detail</mat-card-title>
+            <mat-divider></mat-divider>
+        </mat-card>
+
+    </ng-container>
+
+</section>

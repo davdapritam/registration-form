@@ -1,0 +1,2 @@
+.nav-link { color: var(--themeGrey) }
+.nav-link.active { color: var(--themeGreen); background-color: transparent; }

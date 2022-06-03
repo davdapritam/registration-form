@@ -1,0 +1,57 @@
+<mat-card *ngIf="(isMobile$ | async) as isMobile" [style.width]="isMobile.mobile ? '100%' : '400px'" [ngClass]="{'is-center': !isMobile.mobile, 'card-border': isMobile.mobile, 'mat-elevation-z0': isMobile.mobile}">
+    <form [formGroup]="registrationForm" (ngSubmit)="onRegistration()">
+        <mat-card-content fxLayout="column" fxLayoutGap="10px">
+            Registration
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="16px">
+                <mat-form-field appearance="outline" fxFlex="calc(50% - 16px)">
+                    <mat-label>First Name</mat-label>
+                    <input matInput type="text" formControlName="firstName">
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                    <mat-error> {{ firstNameErrorFn() }} </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="calc(50% - 16px)">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput type="text" formControlName="lastName">
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                    <mat-error> {{ lastNameErrorFn() }} </mat-error>
+                </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email">
+                <!-- <mat-hint>Hint</mat-hint> -->
+                <mat-error> {{ emailErrorFn() }} </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Mobile</mat-label>
+                <input matInput type="tel" formControlName="mobile">
+                <!-- <mat-hint>Hint</mat-hint> -->
+                <mat-error> {{ mobileErrorFn() }} </mat-error>
+            </mat-form-field>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="16px">
+                <mat-form-field appearance="outline" fxFlex="calc(50% - 16px)">
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="passwordShow ? 'text' : 'password'" placeholder="Type Password..." formControlName="password">
+                    <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="passwordShow = !passwordShow">
+                        <mat-icon> {{ passwordShow ? 'visibility' : 'visibility_off' }} </mat-icon>
+                    </button>
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                    <mat-error> {{ passwordErrorFn() }} </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="calc(50% - 16px)">
+                    <mat-label>Confirm Password</mat-label>
+                    <input matInput [type]="confirmPasswordShow ? 'text' : 'password'" formControlName="confirmPassword">
+                    <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="confirmPasswordShow = !confirmPasswordShow">
+                        <mat-icon> {{ confirmPasswordShow ? 'visibility' : 'visibility_off' }} </mat-icon>
+                    </button>
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                    <mat-error> {{ confirmPasswordErrorFn() }} </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+            <button mat-button color="primary" type="button" [routerLink]="'/admin/auth'">Already Account?</button>
+            <button mat-flat-button type="submit" color="primary">Signup</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

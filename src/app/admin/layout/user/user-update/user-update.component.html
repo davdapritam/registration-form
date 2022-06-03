@@ -1,0 +1,20 @@
+<h2 mat-dialog-title> Update {{ data.firstName + ' ' + data.lastName }} </h2>
+<form (ngSubmit)="updateData()">
+    <mat-dialog-content>
+        <mat-form-field appearance="outline">
+            <mat-label>Credit Limit</mat-label>
+            <input matInput [(ngModel)]="creditLimit" [ngModelOptions]="{standalone: true}" cdkFocusInitial>
+            <mat-icon matSuffix>currency_rupee</mat-icon>
+            <!-- <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close [mat-dialog-close]="true" type="button">Cancel</button>
+        <button mat-flat-button color="primary" type="submit"> 
+            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+                <span> Update </span>
+                <mat-spinner color="accent" *ngIf="isApiCalling" [diameter]="20"></mat-spinner>
+            </div>    
+        </button>
+    </mat-dialog-actions>
+</form>

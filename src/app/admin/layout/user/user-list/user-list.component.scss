@@ -1,0 +1,17 @@
+:host {
+    section {
+        padding: 0px 16px 40px 16px;
+        .search-section {
+            padding-top: 10px;
+        }
+        mat-paginator {
+            margin-bottom: 40px;
+        }
+        .success-color {
+            color: var(--themeLightGreen);
+        }
+        .alert-color {
+            color: var(--themeRed);
+        }
+    }
+}

@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <h4 class="modal-title">By login u can continue registration</h4>
+    <i class="fa fa-times close-icon" aria-hidden="true" (click)="dialogClose()"></i>
+</div>
+<div class="modal-body">
+  <div class="p-4 rounded login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="formSubmit()">
+        <div class="form-group mb-3">
+            <label for="email" class="label-control mb-1">Email</label>
+            <input type="email" formControlName="email" class="form-control"
+            [ngClass]="{'is-invalid': loginForm.controls['email'].invalid && loginForm.controls['email'].touched,
+            'is-valid' : !loginForm.controls['email'].invalid && loginForm.controls['email'].touched }">
+            <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
+                <div *ngIf="loginForm.controls['email'].errors" class="text-danger text-end">{{errorHandler('Email',loginForm.controls['email'].errors)}}</div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+          <label for="password" class="label-control mb-1">Password</label>
+          <div class="input-group">
+              <input [type]="hidePassword ? 'text' : 'password'" formControlName="password" class="form-control"
+              [ngClass]="{'is-invalid': loginForm.controls['password'].invalid && loginForm.controls['password'].touched,
+                'is-valid' : !loginForm.controls['password'].invalid && loginForm.controls['password'].touched }">
+                <span class="input-group-text bg-transparent" (click)="hidePassword = !hidePassword"><i class="text-success" [ngClass]="hidePassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i></span>
+          </div>
+            <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">
+                <div *ngIf="loginForm.controls['password'].errors" class="text-danger text-end">{{errorHandler('Password',loginForm.controls['password'].errors)}}</div>
+            </div>
+        </div>
+        <div class="d-grid gap-2 mt-3 roboto-400">
+            <button class="btn btn-lg btn-success" type="submit" [disabled]="!loginForm.valid">Login</button>
+        </div>
+    </form>
+</div>
+</div>

@@ -1,0 +1,107 @@
+<section fxLayout="column" *ngIf="{isMobile: isMobile$ | async} as data">
+
+    <div class="search-section" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="16px" [style.width.%]="100">
+
+        <mat-form-field appearance="outline" [style.width]="data.isMobile?.mobile ? '100%' : '250px'">
+            <mat-label>Search</mat-label>
+            <input matInput [formControl]="userSearchFC" cdkFocusInitial>
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <div fxFlex="100%" fxLayoutAlign="end center" [style.paddingBottom.px]="16">
+
+            <mat-radio-group fxLayoutGap="10px" [formControl]="userOptionFC">
+                <mat-radio-button [value]="">All</mat-radio-button>
+                <mat-radio-button [value]="USEROPTION.seller">Seller</mat-radio-button>
+                <mat-radio-button [value]="USEROPTION.buyer">Buyer</mat-radio-button>
+            </mat-radio-group>
+
+        </div>
+
+    </div>
+
+    <mat-table [dataSource]="userData">
+       
+        <ng-container matColumnDef="loader">
+            <mat-header-cell *matHeaderCellDef [style.width.%]="100" fxLayoutAlign="center center">
+                <mat-spinner [diameter]="30"></mat-spinner>
+            </mat-header-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="noData">
+            <mat-header-cell *matHeaderCellDef [style.width.%]="100" fxLayoutAlign="center center">
+                No Data Found.
+            </mat-header-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef > Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.firstName + ' ' + element.lastName }} </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.email }} </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="mobile">
+            <mat-header-cell *matHeaderCellDef> Mobile </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.mobile }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="creditLimit">
+            <mat-header-cell *matHeaderCellDef fxFlex="150px"> Credit Limit </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="150px"> {{ element.creditLimit | currency : 'INR' }} </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef fxFlex="150px"> Status </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="150px" [ngClass]="{'success-color': element.status === 'active', 'alert-color': element.status !== 'active'}"> {{ element.status }} </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef [fxFlex]="data.isMobile?.mobile ? '130px' : '150px'" [style.paddingRight.px]="data.isMobile?.mobile ? 8 : 24"> Action </mat-header-cell>
+            <mat-cell *matCellDef="let element" [fxFlex]="data.isMobile?.mobile ? '130px' : '150px'" [style.paddingRight.px]="data.isMobile?.mobile ? 8 : 24">
+                <div>
+                    <button mat-icon-button [routerLink]="element._id" [queryParamsHandling]="'merge'">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" (click)="editCreditLimit(element, data.isMobile?.mobile)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button *ngIf="!element.approved" mat-icon-button color="primary" (click)="approvedUser(element._id, true)">
+                        <mat-icon>check</mat-icon>
+                    </button>
+                    <button *ngIf="element.approved" mat-icon-button color="warn" (click)="approvedUser(element._id, false)">
+                        <mat-icon>block</mat-icon>
+                    </button>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="details">
+            <mat-header-cell *matHeaderCellDef [style.paddingLeft.px]="8"> Details </mat-header-cell>
+            <mat-cell *matCellDef="let element" [style.paddingLeft.px]="8">
+                <div fxLayout="column" [style.paddingTop.px]="2" [style.paddingBottom.px]="2">
+                    <label class="subheading-2"><b> {{ element.firstName + ' ' + element.lastName }}</b> </label>
+                    <label class="subheading-1"> {{ element.email }} </label>
+                    <label class="body-2"> {{ element.mobile }} </label>
+                    <div fxLayout="row" fxLayoutGap="2px">
+                        <label class="body-2"> {{ element.creditLimit | currency : 'INR' }} </label>
+                        <label [ngClass]="{'success-color': element.status === 'active', 'alert-color': element.status !== 'active'}"> {{ element.status }} </label>
+                    </div>
+                </div>
+            </mat-cell>
+        </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="data.isMobile?.mobile ? mobileDisplayedColumns : desktopDisplayedColumns; sticky: true;"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="['loader']" fxHide [fxShow]="isApiCalling"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="['noData']" fxHide [fxShow]="!isApiCalling && !userData.length"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: data.isMobile?.mobile ? mobileDisplayedColumns : desktopDisplayedColumns;"></mat-row>
+        
+    </mat-table>
+
+    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[10, 25, 100]" aria-label="user paginator">
+    </mat-paginator>
+
+</section>

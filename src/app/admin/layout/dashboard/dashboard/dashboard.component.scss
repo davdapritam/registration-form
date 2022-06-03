@@ -1,0 +1,31 @@
+@import '../../../../../utility.scss';
+
+:host {
+    section {
+        @media screen and (min-width: $desktop) {
+            padding: 0px 16px 40px 16px;
+        }
+        padding: 0px 8px 40px 8px;
+        .total-wrapper {
+            // background: #FFF;
+            // border: 1px solid #D5D5D5;
+            // border-radius: 5px;
+            padding: 16px;
+            // box-shadow: 0 2px 3px #B5B5B5;
+        }
+        section {
+            .green-color {
+                color: var(--themeGreen);
+            }
+            .blue-color {
+                color: var(--adminThemeBlue);
+            }
+            .mat-display-2 {
+                margin-bottom: 4px;
+            }
+            .mat-subheading-2 {
+                margin-bottom: 0px;
+            }
+        }
+    }
+}

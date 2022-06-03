@@ -1,0 +1,8 @@
+.login-background{
+  background-image: url('/assets/images/background/login-background.jpg');
+  background-size: cover;
+}
+
+.login-container{
+  background-color: #fff;
+}

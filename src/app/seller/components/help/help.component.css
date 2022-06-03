@@ -1,0 +1,38 @@
+.help-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--themeGreen);
+  margin: 50px 0 10px 0;
+}
+
+.help-sub-title {
+  font-size: 20px;
+  font-weight: 400;
+  color: #cccc;
+  color: var(--themeGreen);
+  margin: 43px 0;
+}
+
+.help-category{
+  height: 150px;
+  width: 200px;
+  border-radius: 9px;
+  box-shadow: 1px 1px 7px 5px #ccc;
+  margin: 25px 17px;
+}
+
+.help-category .help-category-icon {
+  font-size: 61px;
+  color: #198754b0;
+}
+
+.help-category .help-category-text {
+  font-size: 20px;
+  margin: 8px 0;
+  color: #198754b0;
+}
+
+button{
+  background-color: var(--themeGreen);
+  color: #fff;
+}

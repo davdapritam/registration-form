@@ -1,0 +1,49 @@
+<h2 mat-dialog-title> Add Campaign </h2>
+<mat-dialog-content>
+    <form fxLayout="column" [formGroup]="campaignFG" (ngSubmit)="saveCampaign()">
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" [style.marginBottom.px]="10">
+            <label> Service Type: </label>
+            <mat-radio-group aria-label="Select an option" formControlName="service_type" fxLayoutGap="5px">
+                <mat-radio-button value="Email">Email</mat-radio-button>
+                <mat-radio-button value="Sms">SMS</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" formControlName="name" cdkFocusInitial>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Email Subject</mat-label>
+            <input matInput type="text" formControlName="email_subject">
+        </mat-form-field>
+        <div fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="10px">
+            <mat-form-field appearance="outline">
+                <mat-label>Campaign Type</mat-label>
+                <mat-select formControlName="campaign_type">
+                    <mat-option *ngFor="let ct of ['General']" [value]="ct">
+                    {{ ct }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="schedule_datetime">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Message</mat-label>
+            <textarea matInput formControlName="message" rows="5"></textarea>
+        </mat-form-field>
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close [mat-dialog-close]="true" type="button">Cancel</button>
+            <button mat-flat-button color="primary" type="submit"> 
+                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+                    <span> Update </span>
+                    <mat-spinner color="accent" *ngIf="isApiCalling" [diameter]="20"></mat-spinner>
+                </div>    
+            </button>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>

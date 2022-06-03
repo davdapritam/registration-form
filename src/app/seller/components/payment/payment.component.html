@@ -1,0 +1,51 @@
+<div class="container-fluid mt-2">
+    <div class="mb-4">
+        <nav class="nav nav-pills flex-column flex-sm-row">
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="complete"
+            (click)="filterPayment('complete')">Completed</a>
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="pending"
+            (click)="filterPayment('pending')">Out Standing</a>
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="penalty"
+            (click)="filterPayment('penalty')">Penalty</a>
+        </nav>
+    </div>
+    <div class="float-end">
+        <select class="form-select" aria-label="Chart Duration">
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+        </select>
+    </div>
+    <app-charts [inputChartLabels] = chartLabels [inputChartType] = chartType [inputChartData] = chartData 
+    [colorRequired]=12 [inputChartOption]=chartOption></app-charts>
+    <div>
+        <table class="table table-striped" *ngIf="payments && payments.length > 0">
+            <thead>
+                <tr>
+                    <th scope="col">Sr no.</th>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Buyer Name</th>
+                    <th scope="col">Firm Name</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Order Accepting Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let payment of payments; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ payment.order._id }}</td>
+                    <td>{{ payment.buyer.firstName }}  {{ payment.buyer.lastName }}</td>
+                    <td>{{ getFirmName(payment) }}</td>
+                    <td>{{ payment.order.product.productName }}</td>
+                    <td>{{ payment.order.quantity }}</td>
+                    <td>{{ payment.modeFinal }}</td>
+                    <td>{{ payment.status | titlecase }}</td>
+                    <td>{{ payment.createdAt | date }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

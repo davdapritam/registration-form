@@ -1,0 +1,18 @@
+.header__img{
+    width: 35px;
+    height: 35px;
+    background-color: #198754;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #F7F6FB;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .nav-link.active {
+    color: var(--themeGreen) !important;
+    background-color: transparent;
+    font-weight: bolder;
+  }

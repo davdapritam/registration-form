@@ -1,0 +1,16 @@
+.rank-holder {
+  border-left: 5px solid var(--themeGreen);
+  height: calc(100vh - 56px);
+  padding: 0 10px;
+  overflow: auto;
+}
+
+
+.rank-up-title{
+  background: #198754;
+  color: white;
+  padding: 4px 11px;
+  border-radius: 0px 10px 10px 0px;
+  width: 473px;
+  margin: 0px 0px 0 -10px;
+}

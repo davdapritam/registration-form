@@ -1,0 +1,126 @@
+<section fxLayout="column" *ngIf="{isMobile: isMobile$ | async,
+    isTotalCount: isTotalCount$ | async
+} as data">
+
+    <!-- filter section -->
+
+    <section fxLayout="row" fxLayoutAlign="center" fxLayoutAlign.gt-sm="start">
+        <mat-form-field appearance="outline" fxFlex.gt-sm="300px" fxFlex.sm="300px" fxFlex="100%">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="dateRangeFG" [rangePicker]="picker">
+              <input matStartDate formControlName="start_date" placeholder="Start date">
+              <input matEndDate formControlName="end_date" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          
+            <mat-error *ngIf="dateRangeFG.controls.start_date.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="dateRangeFG.controls.end_date.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+        </mat-form-field>
+
+    </section>
+
+    <!-- count section -->
+
+    <section fxLayout="column" fxLayoutGap="16px" class="total-count-section">
+
+        <div fxLayout="column" fxLayout.sm="row wrap" fxLayout.gt-sm="row" fxLayoutGap="8px">
+    
+            <div fxFlex.gt-sm="100%" fxLayout="column" fxLayoutAlign="center center" class="total-wrapper">
+                <label class="mat-display-2 blue-color"> {{ (data.isTotalCount?.totalSalesInPrice || 0) | currency : 'INR' }} </label>
+                <label class="mat-subheading-2"> Sales </label>
+            </div>
+    
+            <mat-divider vertical></mat-divider>
+    
+            <div fxFlex.gt-sm="100%" fxLayout="column" fxLayoutAlign="center center" class="total-wrapper">
+                <label class="mat-display-2 green-color"> {{ data.isTotalCount?.totalSalesInQty || 0 }} </label>
+                <label class="mat-subheading-2"> Sales In Qt. </label>
+            </div>
+
+            <mat-divider vertical></mat-divider>
+
+            <div fxFlex.gt-sm="100%" fxLayout="column" fxLayoutAlign="center center" class="total-wrapper">
+                <label class="mat-display-2 blue-color"> {{ (data.isTotalCount?.totalSalesReturnAmount || 0) | currency : 'INR' }} </label>
+                <label class="mat-subheading-2"> Sales Return </label>
+            </div>
+    
+            <mat-divider vertical></mat-divider>
+    
+            <div fxFlex.gt-sm="100%" fxLayout="column" fxLayoutAlign="center center" class="total-wrapper">
+                <label class="mat-display-2 green-color"> {{ (data.isTotalCount?.totalSalesReturnAmount || 0) | currency : 'INR' }} </label>
+                <label class="mat-subheading-2"> Sales Return </label>
+            </div>
+    
+            <mat-divider vertical></mat-divider>
+    
+            <div fxFlex.gt-sm="100%" fxLayout="column" fxLayoutAlign="center center" class="total-wrapper">
+                <label class="mat-display-2 blue-color"> {{ (data.isTotalCount?.totalSalesReturnQty || 0) }} </label>
+                <label class="mat-subheading-2"> Sales Return Qt. </label>
+            </div>
+    
+            <mat-divider vertical></mat-divider>
+    
+            <div fxFlex.gt-sm="100%" fxLayout="column" fxLayoutAlign="center center" class="total-wrapper">
+                <label class="mat-display-2 green-color"> {{ (data.isTotalCount?.totalTodayOrderDelivery || 0) }} </label>
+                <label class="mat-subheading-2"> Today Order Delivery </label>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- chart & buyer | seller section -->
+
+    <section>
+
+        <div>
+
+            <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" class="total-wrapper">
+                <label class="mat-display-2"> {{ (data.isTotalCount?.totalActiveBuyer || 0) }} </label>
+                <label class="mat-subheading-2"> Total Active Buyer </label>
+            </div>
+    
+            <mat-divider vertical></mat-divider>
+    
+            <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" class="total-wrapper">
+                <label class="mat-display-2"> {{ (data.isTotalCount?.totalActiveSeller || 0) }} </label>
+                <label class="mat-subheading-2"> Total Active Seller </label>
+            </div>
+    
+            <mat-divider vertical></mat-divider>
+    
+            <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" class="total-wrapper">
+                <label class="mat-display-2"> {{ (data.isTotalCount?.totalRegisteredUser || 0) }} </label>
+                <label class="mat-subheading-2"> Total Register User </label>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- product & top buyer section -->
+
+    <section fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center start" fxLayoutAlign.gt-sm="start start" fxLayoutGap="16px">
+
+        <div fxFlex.gt-sm="50%" fxLayout="column" [style.width]="data.isMobile?.mobile ? '100%' : 'auto'">
+
+            <label class="mat-title" [style.marginBottom.px]="2">Top Product</label>
+            <mat-divider [style.marginBottom.px]="10"></mat-divider>
+
+            <app-product-report [applyPadding]="false"></app-product-report>
+
+        </div>
+
+        <div fxFlex.gt-sm="50%" fxLayout="column" [style.width]="data.isMobile?.mobile ? '100%' : 'auto'">
+
+            <label class="mat-title" [style.marginBottom.px]="2">Top 10 Buyer</label>
+            <mat-divider [style.marginBottom.px]="10"></mat-divider>
+
+            <app-top-buyer-report [applyPadding]="false"></app-top-buyer-report>
+
+        </div>
+
+    </section>
+
+</section>

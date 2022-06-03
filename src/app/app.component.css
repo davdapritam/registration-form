@@ -1,0 +1,19 @@
+html, body {
+    min-height: 100vh;
+    /* height: auto; */
+    margin: 0;
+}
+table {
+  background: white;
+  box-shadow: 1px 1px 4px 2px #ccc;
+  border-radius: 10px;
+}
+
+table thead tr {
+  color: #b1b1b1;
+  font-size: 14px;
+}
+
+table tbody td {
+  /* color: blue; */
+}

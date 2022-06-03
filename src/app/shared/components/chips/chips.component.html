@@ -1,0 +1,7 @@
+<div class="d-flex flex-wrap">
+  <ul class="chipsContainer" *ngFor="let item of items;">
+    <li class="label label-default chips">{{item}} 
+      <i class="fa fa-times-circle cursor-pointer" (click)="close(item)"></i>
+    </li>
+  </ul>
+</div>

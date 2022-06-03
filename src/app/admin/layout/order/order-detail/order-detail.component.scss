@@ -1,0 +1,20 @@
+:host {
+    section {
+        padding: 0px 16px 40px 16px;
+    }
+    mat-card {
+        // max-width: 650px;
+        mat-card-title {
+            margin-bottom: 16px;
+        }
+        mat-card-content {
+            margin-top: 32px;
+        }
+        mat-slide-toggle {
+            float: right;
+        }
+    }
+    .card-border {
+        border: 1px solid #E1E1E1;
+    }
+}

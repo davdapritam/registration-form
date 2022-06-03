@@ -1,0 +1,96 @@
+<section fxLayout="column" *ngIf="{isMobile: isMobile$ | async} as data">
+
+    <div class="search-section" fxLayout="row" fxFlex="100%" fxLayoutAlign="start center" fxLayoutGap="16px">
+
+        <mat-form-field appearance="outline" [style.width]="data.isMobile?.mobile ? '100%' : '250px'">
+            <mat-label>Search</mat-label>
+            <input matInput [formControl]="orderSearchFC">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+    </div>
+
+    <mat-table [dataSource]="orderData">
+
+        <ng-container matColumnDef="loader">
+            <mat-header-cell *matHeaderCellDef [style.width.%]="100" fxLayoutAlign="center center">
+                <mat-spinner [diameter]="30"></mat-spinner>
+            </mat-header-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="noData">
+            <mat-header-cell *matHeaderCellDef [style.width.%]="100" fxLayoutAlign="center center">
+                No Data Found.
+            </mat-header-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="productName">
+            <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.product?.productName }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="orderBy">
+            <mat-header-cell *matHeaderCellDef fxFlex="190px"> Order By </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="190px"> {{ element.orderBy?.firstName + ' ' + element.orderBy?.lastName }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="orderTo">
+            <mat-header-cell *matHeaderCellDef fxFlex="190px"> Order By </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="190px"> {{ element.orderTo?.firstName + ' ' + element.orderTo?.lastName }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="payment">
+            <mat-header-cell *matHeaderCellDef fxFlex="100px"> Payment </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="100px"> {{ element.payment?.status }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+            <mat-header-cell *matHeaderCellDef fxFlex="100px"> Quantity </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="100px"> {{ element.quantity }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef fxFlex="100px"> Status </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="100px"> {{ element.status }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="approved">
+            <mat-header-cell *matHeaderCellDef fxFlex="100px"> Approved </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="100px"> {{ element.approved }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px" [style.paddingRight.px]="data.isMobile?.mobile ? 8 : 24"> Action </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="60px" [style.paddingRight.px]="data.isMobile?.mobile ? 8 : 24">
+                <button mat-icon-button [routerLink]="element._id">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="details">
+            <mat-header-cell *matHeaderCellDef [style.paddingLeft.px]="8"> Details </mat-header-cell>
+            <mat-cell *matCellDef="let element" [style.paddingLeft.px]="8">
+                <div fxLayout="column" [style.paddingTop.px]="2" [style.paddingBottom.px]="2">
+                    <label class="subheading-2"><b> {{ element.product?.productName }} </b> </label>
+                    <label class="subheading-1"> {{ element.orderBy?.firstName + ' ' + element.orderBy?.lastName }} - {{ element.orderTo?.firstName + ' ' + element.orderTo?.lastName }} </label>
+                    <label class="body-2"> {{ element.payment?.status }} </label>
+                    <div fxLayout="row" fxLayoutGap="3px">
+                        <label class="body-2"> <b> {{ element.quantity }} </b>, </label>
+                        <label [ngClass]="{'success-color': element.approved, 'alert-color': !element.approved}"> {{ element.approved }} </label>
+                    </div>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="data.isMobile?.mobile ? mobileDisplayedColumns : desktopDisplayedColumns; sticky: true;"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="['loader']" fxHide [fxShow]="isApiCalling"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="['noData']" fxHide [fxShow]="!isApiCalling && !orderData?.length"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: data.isMobile?.mobile ? mobileDisplayedColumns : desktopDisplayedColumns;"></mat-row>
+
+    </mat-table>
+
+    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="order paginator">
+    </mat-paginator>
+
+</section>

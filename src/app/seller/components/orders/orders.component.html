@@ -1,0 +1,44 @@
+<div class="container-fluid mt-2">
+    <div>
+        <nav class="nav nav-pills flex-column flex-sm-row">
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="active"
+                (click)="filterOrder('active')">Active</a>
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="pending"
+                (click)="filterOrder('pending')">Pending</a>
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="cancel"
+                (click)="filterOrder('cancel')">Cancel</a>
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="ready_to_ship"
+                (click)="filterOrder('ready_to_ship')">Ready To Ship</a>
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="complete"
+                (click)="filterOrder('complete')">Complete</a>
+        </nav>
+    </div>
+    <!-- If we have a order list -->
+    <table class="table table-striped" *ngIf="orders && orders.length > 0">
+        <thead>
+            <tr>
+                <th scope="col">Sr no.</th>
+                <th scope="col">Name Of Firm</th>
+                <th scope="col">Product</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Credit Period</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ getFirmName(order) }}</td>
+                <td>{{ order.product.productName }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ getCreditPeriod(order.payment.mode) }}</td>
+                <td>{{ order.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- If we don't have order list -->
+    <div *ngIf="!orders || (orders && orders.length < 1)" class="row m-0 row-cols-12 g-4 w-100 text-center">
+        <p>No Orders Available</p>
+    </div>
+</div>

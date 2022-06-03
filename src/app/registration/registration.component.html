@@ -1,0 +1,448 @@
+<div class="container-fluid d-flex justify-content-center align-items-center">
+    <div id="userRegistration" class="bs-stepper">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#userDetails">
+          <button class="step-trigger">
+            <span class="bs-stepper-circle" [ngClass]="{'success-header': userDetailsForm.valid && isAgreementAccepted}"> <i class='fa fa-user-circle-o'></i></span>
+            <span class="bs-stepper-label">User</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#firmDetails" [style.pointerEvents]="(userDetailsForm.invalid || isUserFirmDetailSave) ? 'none' : 'auto'" (click)="userDetailsSubmit()">
+          <button class="step-trigger">
+            <span class="bs-stepper-circle" [ngClass]="{'success-header': firmDetailsForm.valid}"> <i class='fa fa-building-o'></i></span>
+            <span class="bs-stepper-label">Firm</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#userIdentity" [style.pointerEvents]="(userDetailsForm.invalid && firmDetailsForm.invalid && !isUserFirmDetailSave) ? 'none' : 'auto'" (click)="firmDetailsSubmit()">
+          <button class="step-trigger">
+            <span class="bs-stepper-circle" [ngClass]="{'success-header': panFile && aadharFrontFile && aadharBackFile}"> <i class='fa fa-id-card' ></i></span>
+            <span class="bs-stepper-label">User Identity</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#businessProof">
+            <button class="step-trigger">
+              <span class="bs-stepper-circle" [ngClass]="{'success-header': businessProofFile}"> <i class='fa fa-file-pdf-o'></i></span>
+              <span class="bs-stepper-label">Documents</span>
+            </button>
+        </div>
+      </div>
+      <div class="bs-stepper-content">
+            <div id="userDetails" class="content">
+                <div class="shadow-lg p-4 rounded">
+                    <form [formGroup]="userDetailsForm" (ngSubmit)="userDetailsSubmit()">
+                        <div class="row">
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="firstname" class="label-control mb-1">First Name</label>
+                                <input type="text" formControlName="firstName" class="form-control"
+                                    [ngClass]="{'is-invalid': userDetailsForm.controls['firstName'].invalid && userDetailsForm.controls['firstName'].touched,
+                                        'is-valid' : !userDetailsForm.controls['firstName'].invalid && userDetailsForm.controls['firstName'].touched }">
+                                <div
+                                    *ngIf="userDetailsForm.controls['firstName'].invalid && userDetailsForm.controls['firstName'].touched">
+                                    <div *ngIf="userDetailsForm.controls['firstName'].errors" class="text-danger text-end">
+                                        {{errorHandler('First Name',userDetailsForm.controls['firstName'].errors)}}</div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="lastName" class="label-control mb-1">Last Name</label>
+                                <input type="text" formControlName="lastName" class="form-control"
+                                    [ngClass]="{'is-invalid': userDetailsForm.controls['lastName'].invalid && userDetailsForm.controls['lastName'].touched,
+                                        'is-valid' : !userDetailsForm.controls['lastName'].invalid && userDetailsForm.controls['lastName'].touched }">
+                                <div
+                                    *ngIf="userDetailsForm.controls['lastName'].invalid && userDetailsForm.controls['lastName'].touched">
+                                    <div *ngIf="userDetailsForm.controls['lastName'].errors" class="text-danger text-end">
+                                        {{errorHandler('Last Name',userDetailsForm.controls['lastName'].errors)}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="email" class="label-control mb-1">Email</label>
+                                <input type="email" formControlName="email" class="form-control"
+                                    [ngClass]="{'is-invalid': userDetailsForm.controls['email'].invalid && userDetailsForm.controls['email'].touched,
+                                        'is-valid' : !userDetailsForm.controls['email'].invalid && userDetailsForm.controls['email'].touched }">
+                                <div *ngIf="userDetailsForm.controls['email'].invalid && userDetailsForm.controls['email'].touched">
+                                    <div *ngIf="userDetailsForm.controls['email'].errors" class="text-danger text-end">
+                                        {{errorHandler('Email',userDetailsForm.controls['email'].errors)}}</div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="password" class="label-control mb-1">Password</label>
+                                <div class="input-group">
+                                    <input [type]="hidePassword ? 'text' : 'password'" formControlName="password" class="form-control"
+                                        [ngClass]="{'is-invalid': userDetailsForm.controls['password'].invalid && userDetailsForm.controls['password'].touched,
+                                        'is-valid' : !userDetailsForm.controls['password'].invalid && userDetailsForm.controls['password'].touched }" maxlength="16">
+                                    <span class="input-group-text bg-transparent" (click)="hidePassword = !hidePassword"><i class="text-success" [ngClass]="hidePassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i></span>
+                                </div>
+                                <div
+                                    *ngIf="userDetailsForm.controls['password'].invalid && userDetailsForm.controls['password'].touched">
+                                    <div *ngIf="userDetailsForm.controls['password'].errors" class="text-danger text-end">
+                                        {{errorHandler('Password',userDetailsForm.controls['password'].errors)}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="referalCode" class="label-control mb-1">Mobile</label>
+                                <input type="text" formControlName="mobile" class="form-control"
+                                    [ngClass]="{'is-invalid': userDetailsForm.controls['mobile'].invalid && userDetailsForm.controls['mobile'].touched,
+                                        'is-valid' : !userDetailsForm.controls['mobile'].invalid && userDetailsForm.controls['mobile'].touched }" maxlength="10">
+                                <div
+                                    *ngIf="userDetailsForm.controls['mobile'].invalid && userDetailsForm.controls['mobile'].touched">
+                                    <div *ngIf="userDetailsForm.controls['mobile'].errors" class="text-danger text-end">
+                                        {{errorHandler('Mobile',userDetailsForm.controls['mobile'].errors)}}</div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="role" class="label-control mb-1">Role</label>
+                                <div class="d-flex">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="role" id="buyer"
+                                            [checked]="userDetailsForm.controls['role'].value==='BUYER'" (change)="toggleRole()">
+                                        <label class="form-check-label" for="buyer">BUYER</label>
+                                    </div>
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="radio" name="role" id="seller"
+                                            [checked]="userDetailsForm.controls['role'].value==='SELLER'" (change)="toggleRole()">
+                                        <label class="form-check-label" for="seller">SELLER</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="userDetailsForm.controls['role'].value==='SELLER'">
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="sellerRole" class="label-control mb-1">Type</label>
+                                <div class="d-flex">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sellerRole" id="trader"
+                                            [checked]="userDetailsForm.controls['sellerRole'].value==='TRADER'" (change)="toggleSellerRole()">
+                                        <label class="form-check-label" for="trader">TRADER</label>
+                                    </div>
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="radio" name="sellerRole" id="manufacturer"
+                                            [checked]="userDetailsForm.controls['sellerRole'].value==='MANUFACTURER'" (change)="toggleSellerRole()">
+                                        <label class="form-check-label" for="manufacturer">MANUFACTURER</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="haveReferal" class="label-control mb-1">Having Referal Code?</label>
+                                <div class="d-flex">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="haveReferal" id="referalYes"
+                                            [checked]="userDetailsForm.controls['haveReferalCode'].value==='Yes'" (change)="toggleReferal()">
+                                        <label class="form-check-label" for="referalYes">Yes</label>
+                                    </div>
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="radio" name="haveReferal" id="referalNo"
+                                            [checked]="userDetailsForm.controls['haveReferalCode'].value==='No'" (change)="toggleReferal()">
+                                        <label class="form-check-label" for="referalNo">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-12 col-md-6" *ngIf="userDetailsForm.controls['haveReferalCode'].value==='Yes'">
+                                <label for="referalCode" class="label-control mb-1">Referal Code</label>
+                                <input type="text" formControlName="referalCode" class="form-control"
+                                    [ngClass]="{'is-invalid': userDetailsForm.controls['referalCode'].invalid && userDetailsForm.controls['referalCode'].touched,
+                                        'is-valid' : !userDetailsForm.controls['referalCode'].invalid && userDetailsForm.controls['referalCode'].touched }" maxlength="6">
+                                <div
+                                    *ngIf="userDetailsForm.controls['referalCode'].invalid && userDetailsForm.controls['referalCode'].touched">
+                                    <div *ngIf="userDetailsForm.controls['referalCode'].errors" class="text-danger text-end">
+                                        {{errorHandler('Referal Code',userDetailsForm.controls['referalCode'].errors)}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check d-flex justify-content-center">
+                            <input class="form-check-input me-2" required type="checkbox" value="" id="agreementCheckbox" [checked]="isAgreementAccepted" (change)="isAgreementAccepted = !isAgreementAccepted;">
+                            <label class="form-check-label" for="agreementCheckbox">I agree to Businesshike's
+                                <a class="text-decoration-none" routerLink="/termsAndConditions">Terms & Conditions</a> and acknowledge Businesshike's
+                                <a class="text-decoration-none" routerLink="/privacyPolicy">Privacy Policy</a>
+                            </label>
+                        </div>
+                        <div class="d-grid gap-2 mt-3 roboto-400">
+                            <button class="btn btn-lg btn-success" type="submit" [disabled]="!userDetailsForm.valid || !isAgreementAccepted">Submit</button>
+                            <div>
+                              <a class="text-decoration-none text-center text-success" routerLink="/">Have an Account?</a>
+                              <a class="text-decoration-none text-center text-success p-3" (click)="continueRegistration()">Continue registration?</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="firmDetails" class="content">
+                <div class="shadow-lg p-4 rounded">
+                    <form [formGroup]="firmDetailsForm" (ngSubmit)="firmDetailsSubmit()">
+                        <div class="row">
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="firmName" class="label-control mb-1">Firm Name</label>
+                                <input type="text" formControlName="firmName" class="form-control"
+                                    [ngClass]="{'is-invalid': firmDetailsForm.controls['firmName'].invalid && firmDetailsForm.controls['firmName'].touched,
+                                        'is-valid' : !firmDetailsForm.controls['firmName'].invalid && firmDetailsForm.controls['firmName'].touched }">
+                                <div
+                                    *ngIf="firmDetailsForm.controls['firmName'].invalid && firmDetailsForm.controls['firmName'].touched">
+                                    <div *ngIf="firmDetailsForm.controls['firmName'].errors" class="text-danger text-end">
+                                        {{errorHandler('Firm Name',firmDetailsForm.controls['firmName'].errors)}}</div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="GSTNumber" class="label-control mb-1">GST Number</label>
+                                <input type="text" formControlName="GSTNumber" class="form-control"
+                                    [ngClass]="{'is-invalid': firmDetailsForm.controls['GSTNumber'].invalid && firmDetailsForm.controls['GSTNumber'].touched,
+                                        'is-valid' : !firmDetailsForm.controls['GSTNumber'].invalid && firmDetailsForm.controls['GSTNumber'].touched }" maxlength="15">
+                                <div
+                                    *ngIf="firmDetailsForm.controls['GSTNumber'].invalid && firmDetailsForm.controls['GSTNumber'].touched">
+                                    <div *ngIf="firmDetailsForm.controls['GSTNumber'].errors" class="text-danger text-end">
+                                        {{errorHandler('GST Number',firmDetailsForm.controls['GSTNumber'].errors)}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="PANNumber" class="label-control mb-1">PAN Number</label>
+                                <input type="text" formControlName="PANNumber" class="form-control"
+                                    [ngClass]="{'is-invalid': firmDetailsForm.controls['PANNumber'].invalid && firmDetailsForm.controls['PANNumber'].touched,
+                                        'is-valid' : !firmDetailsForm.controls['PANNumber'].invalid && firmDetailsForm.controls['PANNumber'].touched }" maxlength="10">
+                                <div
+                                    *ngIf="firmDetailsForm.controls['PANNumber'].invalid && firmDetailsForm.controls['PANNumber'].touched">
+                                    <div *ngIf="firmDetailsForm.controls['PANNumber'].errors" class="text-danger text-end">
+                                        {{errorHandler('PAN Number',firmDetailsForm.controls['PANNumber'].errors)}}</div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="bankName" class="label-control mb-1">Bank Name</label>
+                                <div *ngIf="!insertBankName;else insertBank">
+                                    <select class="form-select" aria-label="Bank Name" formControlName="bankName" (change)="selectBank($event)">
+                                        <ng-container *ngFor="let bank of bankList;">
+                                            <option>{{bank}}</option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                                <ng-template #insertBank>
+                                    <input type="text" formControlName="bankName" class="form-control"
+                                    [ngClass]="{'is-invalid': firmDetailsForm.controls['bankName'].invalid && firmDetailsForm.controls['bankName'].touched,
+                                        'is-valid' : !firmDetailsForm.controls['bankName'].invalid && firmDetailsForm.controls['bankName'].touched }" maxlength="30">
+                                    <div *ngIf="firmDetailsForm.controls['bankName'].invalid && firmDetailsForm.controls['bankName'].touched">
+                                        <div *ngIf="firmDetailsForm.controls['bankName'].errors" class="text-danger text-end">
+                                            {{errorHandler('Bank Name',firmDetailsForm.controls['bankName'].errors)}}</div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="accountNumber" class="label-control mb-1">Bank Account Number</label>
+                                <input type="text" formControlName="accountNumber" class="form-control"
+                                    [ngClass]="{'is-invalid': firmDetailsForm.controls['accountNumber'].invalid && firmDetailsForm.controls['accountNumber'].touched,
+                                        'is-valid' : !firmDetailsForm.controls['accountNumber'].invalid && firmDetailsForm.controls['accountNumber'].touched }" maxlength="16">
+                                <div
+                                    *ngIf="firmDetailsForm.controls['accountNumber'].invalid && firmDetailsForm.controls['accountNumber'].touched">
+                                    <div *ngIf="firmDetailsForm.controls['accountNumber'].errors" class="text-danger text-end">
+                                        {{errorHandler('Account Number',firmDetailsForm.controls['accountNumber'].errors)}}</div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 col-12 col-md-6">
+                                <label for="ifscCode" class="label-control mb-1">IFSC Code</label>
+                                <input type="text" formControlName="ifscCode" class="form-control"
+                                    [ngClass]="{'is-invalid': firmDetailsForm.controls['ifscCode'].invalid && firmDetailsForm.controls['ifscCode'].touched,
+                                        'is-valid' : !firmDetailsForm.controls['ifscCode'].invalid && firmDetailsForm.controls['ifscCode'].touched }" maxlength="11">
+                                <div
+                                    *ngIf="firmDetailsForm.controls['ifscCode'].invalid && firmDetailsForm.controls['ifscCode'].touched">
+                                    <div *ngIf="firmDetailsForm.controls['ifscCode'].errors" class="text-danger text-end">
+                                        {{errorHandler('IFSC Code',firmDetailsForm.controls['ifscCode'].errors)}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2">
+                            <label class="label-control mb-1">Firm Address</label>
+                            <hr class="divider">
+                        </div>
+                        <div formGroupName="address">
+                            <div class="row">
+                                <div class="form-group mb-3 col-12 col-md-6">
+                                    <label for="addessLine1" class="label-control mb-1">Addess Line1</label>
+                                    <input type="text" formControlName="addessLine1" class="form-control"
+                                        [ngClass]="{'is-invalid': address.controls['addessLine1'].invalid && address.controls['addessLine1'].touched,
+                                            'is-valid' : !address.controls['addessLine1'].invalid && address.controls['addessLine1'].touched }">
+                                    <div *ngIf="address.controls['addessLine1'].invalid && address.controls['addessLine1'].touched">
+                                        <div *ngIf="address.controls['addessLine1'].errors" class="text-danger text-end">
+                                            {{errorHandler('Addess Line1',address.controls['addessLine1'].errors)}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3 col-12 col-md-6">
+                                    <label for="addessLine2" class="label-control mb-1">Addess Line2</label>
+                                    <input type="text" formControlName="addessLine2" class="form-control"
+                                        [ngClass]="{'is-invalid': address.controls['addessLine2'].invalid && address.controls['addessLine2'].touched,
+                                            'is-valid' : !address.controls['addessLine2'].invalid && address.controls['addessLine2'].touched }">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group mb-3 col-12 col-md-6">
+                                    <label for="city" class="label-control mb-1">City</label>
+                                    <input type="text" formControlName="city" class="form-control" [ngClass]="{'is-invalid': address.controls['city'].invalid && address.controls['city'].touched,
+                                            'is-valid' : !address.controls['city'].invalid && address.controls['city'].touched }">
+                                    <div *ngIf="address.controls['city'].invalid && address.controls['city'].touched">
+                                        <div *ngIf="address.controls['city'].errors" class="text-danger text-end">
+                                            {{errorHandler('City',address.controls['city'].errors)}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3 col-12 col-md-6">
+                                    <label for="state" class="label-control mb-1">State</label>
+                                    <input type="text" formControlName="state" class="form-control"
+                                        [ngClass]="{'is-invalid': address.controls['state'].invalid && address.controls['state'].touched,
+                                            'is-valid' : !address.controls['state'].invalid && address.controls['state'].touched }">
+                                    <div *ngIf="address.controls['state'].invalid && address.controls['state'].touched">
+                                        <div *ngIf="address.controls['state'].errors" class="text-danger text-end">
+                                            {{errorHandler('State',address.controls['state'].errors)}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group mb-3 col-12 col-md-6">
+                                    <label for="country" class="label-control mb-1">Country</label>
+                                    <input type="text" formControlName="country" class="form-control"
+                                        [ngClass]="{'is-invalid': address.controls['country'].invalid && address.controls['country'].touched,
+                                            'is-valid' : !address.controls['country'].invalid && address.controls['country'].touched }">
+                                    <div *ngIf="address.controls['country'].invalid && address.controls['country'].touched">
+                                        <div *ngIf="address.controls['country'].errors" class="text-danger text-end">
+                                            {{errorHandler('Country',address.controls['country'].errors)}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3 col-12 col-md-6">
+                                    <label for="pincode" class="label-control mb-1">Pincode</label>
+                                    <input type="text" formControlName="pincode" class="form-control"
+                                        [ngClass]="{'is-invalid': address.controls['pincode'].invalid && address.controls['pincode'].touched,
+                                            'is-valid' : !address.controls['pincode'].invalid && address.controls['pincode'].touched }" maxlength="6">
+                                    <div *ngIf="address.controls['pincode'].invalid && address.controls['pincode'].touched">
+                                        <div *ngIf="address.controls['pincode'].errors" class="text-danger text-end">
+                                            {{errorHandler('Pincode',address.controls['pincode'].errors)}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 mt-3 roboto-400">
+                            <button class="btn btn-lg btn-success" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="userIdentity" class="content text-center">
+                <div class="shadow-lg p-4 rounded">
+                    <h3>Drag and Drop File Here OR Browse For File{{!panFile}}</h3>
+                    <div>
+                        <div class="dropZone mt-3" id="panUploader"
+                            [ngStyle]="!panFile ? {'border': 'dashed 1px #979797'} : {'border': ''}" appDragDropListner
+                            (fileDropped)="onFileDropped($event, 'panUploader')">
+                            <div *ngIf="!panFile;else panPreview">
+                                <input type="file" #fileDropRef class="fileDropRef" accept="image/*"
+                                    (change)="fileBrowseHandler($event, 'panUploader')" />
+                                <label for="fileDropRef" class="browseBtn">Upload Your PAN Card</label>
+                            </div>
+                            <ng-template #panPreview>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-success font-18">{{panFile.name || this.uploadFileName.panCard}}</div>
+                                    <div class="font-22">
+                                        <i class='fa fa-eye text-success p-2 cursor-pointer'
+                                            (click)="imagePreviewURL = panSrc"></i>
+                                        <i class='fa fa-trash-o p-2 cursor-pointer color-red'
+                                            (click)="panFile='';imagePreviewURL=''"></i>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="dropZone mt-3" id="aadharFrontUploader"
+                            [ngStyle]="!aadharFrontFile ? {'border': 'dashed 1px #979797'} : {'border': ''}" appDragDropListner
+                            (fileDropped)="onFileDropped($event, 'aadharFrontUploader')">
+                            <div *ngIf="!aadharFrontFile;else aadharFrontPreview">
+                                <input type="file" #fileDropRef class="fileDropRef" accept="image/*"
+                                    (change)="fileBrowseHandler($event, 'aadharFrontUploader')" />
+                                <label for="fileDropRef" class="browseBtn">Upload Your Aadhar Card Front</label>
+                            </div>
+                            <ng-template #aadharFrontPreview>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-success font-18">{{aadharFrontFile.name || this.uploadFileName.aadharCardFront}}</div>
+                                    <div class="font-22">
+                                        <i class='fa fa-eye text-success p-2 cursor-pointer'
+                                            (click)="imagePreviewURL = aadharFrontSrc"></i>
+                                        <i class='fa fa-trash-o p-2 cursor-pointer color-red'
+                                            (click)="aadharFrontFile='';imagePreviewURL=''"></i>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="dropZone mt-3" id="aadharBackUploader"
+                            [ngStyle]="!aadharBackFile ? {'border': 'dashed 1px #979797'} : {'border': ''}" appDragDropListner
+                            (fileDropped)="onFileDropped($event, 'aadharBackUploader')">
+                            <div *ngIf="!aadharBackFile;else aadharBackPreview">
+                                <input type="file" #fileDropRef class="fileDropRef" accept="image/*"
+                                    (change)="fileBrowseHandler($event, 'aadharBackUploader')" />
+                                <label for="fileDropRef" class="browseBtn">Upload Your Aadhar Card Back</label>
+                            </div>
+                            <ng-template #aadharBackPreview>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-success font-18">{{aadharBackFile.name || this.uploadFileName.aadharCardBack}}</div>
+                                    <div class="font-22">
+                                        <i class='fa fa-eye text-success p-2 cursor-pointer'
+                                            (click)="imagePreviewURL = aadharBackSrc"></i>
+                                        <i class='fa fa-trash-o p-2 cursor-pointer color-red'
+                                            (click)="aadharBackFile='';imagePreviewURL=''"></i>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="mt-4" *ngIf="imagePreviewURL">
+                        <img [src]="imagePreviewURL" alt="PAN Preview" target="_blank" width="250px" height="150px" />
+                    </div>
+                    <div class="d-grid gap-2 mt-3 roboto-400">
+                        <button type="button" class="btn btn-lg btn-success"
+                            [disabled]="!panFile || !aadharFrontFile || !aadharBackFile" (click)="uploadIdentity()">Upload</button>
+                    </div>
+                </div>
+            </div>
+            <div id="businessProof" class="content text-center">
+                <div class="shadow-lg p-4 rounded">
+                    <h3>Drag and Drop File Here OR Browse For File</h3>
+                    <div class="dropZone mt-3" id="businessProofUploader"
+                        [ngStyle]="!businessProofFile ? {'border': 'dashed 1px #979797'} : {'border': 'dashed 1px #979797'}"
+                        appDragDropListner (fileDropped)="onFileDropped($event, 'businessProofUploader')">
+                        <input type="file" #fileDropRef class="fileDropRef" accept="application/pdf"
+                            (change)="fileBrowseHandler($event, 'businessProofUploader')" />
+                        <div *ngIf="!businessProofFile;else businessProofFilePreview">
+                            <label for="fileDropRef" class="browseBtn">Upload Your {{businessProof}}</label>
+                        </div>
+                        <ng-template #businessProofFilePreview>
+                            <div class="d-flex justify-content-center align-items-center text-success">
+                                <i class='bx bxs-file-pdf'></i>{{businessProofFile.name}}
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div class="dropZone mt-3" id="authorizedSignatureUploader" *ngIf="userDetailsForm.controls['role'].value==='SELLER'"
+                        [ngStyle]="!authorizedSignature ? {'border': 'dashed 1px #979797'} : {'border': 'dashed 1px #979797'}"
+                        appDragDropListner (fileDropped)="onFileDropped($event, 'authorizedSignatureUploader')">
+                        <input type="file" #fileDropRef class="fileDropRef" accept="image/png, image/jpeg"
+                            (change)="fileBrowseHandler($event, 'authorizedSignatureUploader')" />
+                        <div *ngIf="!authorizedSignature;else authorizedSignaturePreview">
+                            <label for="fileDropRef" class="browseBtn">Upload Your Authorized Signature</label>
+                        </div>
+                        <ng-template #authorizedSignaturePreview>
+                            <div class="d-flex justify-content-center align-items-center text-success">
+                                <i class='bx bxs-file-pdf'></i>{{authorizedSignature.name}}
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 mt-3 roboto-400">
+                    <button type="button" class="btn btn-lg btn-success" [disabled]="!businessProofFile || (userDetailsForm.controls['role'].value==='SELLER' && !authorizedSignature)"
+                        (click)="uploadBusinessProof()">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

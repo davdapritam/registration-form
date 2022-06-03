@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~bs-stepper/dist/css/bs-stepper.min.css';
+@import '~font-awesome/css/font-awesome.css';
+
+
+:root {
+    --themeGreen: #198754;
+    --themeLightGreen: #1fa969;
+    --themeGrey: #6c757d;
+    --themeRed: #dc3545;
+    --adminThemeBlue: #3f51b5;
+}
+
+.fullHeight {
+    height: 100vh !important;
+}
+
+.roboto-400 {
+    font-family: 'Roboto';
+    font-weight: 400;
+}
+
+.bs-stepper-label, .roboto-500 {
+    font-family: 'Roboto';
+    font-weight: 500;
+}
+
+.label-control, .text-danger {
+    font-family: 'Roboto';
+    font-weight: 400;
+}
+
+.label-control, .form-check-label {
+    color: var(--themeGreen);
+}
+
+.form-check-input:checked {
+    background-color: var(--themeGreen);
+    border-color: var(--themeGreen);
+}
+
+.color-green {
+    color: var(--themeGreen);
+}
+
+.text-justified {
+    text-align: justify;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.color-red {
+    color: var(--themeRed);
+}
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,32 @@
+<mat-card *ngIf="(isMobile$ | async) as isMobile" [style.width]="isMobile.mobile ? '100%' : '400px'" [class.mat-elevation-z0]="isMobile.mobile" [class.card-border]="isMobile.mobile">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <mat-card-content>
+            Login
+            <div fxLayout="column" fxLayoutGap="10px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" placeholder="Type Email..." formControlName="email">
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                    <mat-error>{{emailErrorFn()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="passwordShow ? 'text' : 'password'" placeholder="Type Password..." formControlName="password">
+                    <button matSuffix mat-icon-button type="button" (click)="passwordShow = !passwordShow">
+                        <mat-icon> {{ passwordShow ? 'visibility' : 'visibility_off' }} </mat-icon>
+                    </button>
+                    <mat-hint>Hint</mat-hint>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+            <button mat-button type="button" color="primary" [routerLink]="'registration'">Create Account</button>
+            <button mat-flat-button type="submit" color="primary">
+                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+                    <span> Login </span>
+                    <mat-spinner color="accent" *ngIf="isApiCalling" [diameter]="20"></mat-spinner>
+                </div>
+            </button>
+        </mat-card-actions>
+    </form>
+</mat-card>

@@ -1,0 +1,27 @@
+.nav-link { color: var(--themeGrey) }
+.nav-link.active { color: var(--themeGreen); background-color: transparent; }
+
+.image-wrap{
+  transition: transform .2s; /* Animation */
+}
+
+.card:hover{
+  box-shadow: 1px 1px 4px 2px #ccc;
+}
+
+.card:hover .image-wrap{
+  -webkit-filter: grayscale(100%) !important;
+	filter: grayscale(100%) !important;
+  background-color: rgba(204, 204, 204, 0.178);
+  transform: scale(0.95);
+}
+
+.product-content{
+  height: calc(100vh - 118px);
+  overflow: auto;
+}
+
+.pagination .page-link{
+  color: var(--themeGreen) !important;
+}
+

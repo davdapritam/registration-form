@@ -1,0 +1,40 @@
+<div class="container-fluid mt-2">
+    <div class="mb-4">
+        <nav class="nav nav-pills flex-column flex-sm-row">
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="businessReport"
+                (click)="filterReport('businessReport')">Business Report</a>
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="taxInvoice"
+                (click)="filterReport('taxInvoice')">Tax Invoice</a>
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="salesReturn"
+                (click)="filterReport('salesReturn')">Sales Return</a>
+            <a class="flex-sm-fill text-sm-center nav-link cursor-pointer" id="totalSales"
+                (click)="filterReport('totalSales')">Total Sales</a>
+        </nav>
+    </div>
+
+    <div class="float-end">
+        <select class="form-select" aria-label="Data Duration">
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+        </select>
+    </div>
+
+    <div *ngIf='currentAciveTab === "businessReport"'>
+        <app-charts [inputChartLabels] = businessReportChartLabels [inputChartType] = businessReportChartType 
+        [inputChartData] = businessReportChartData [colorRequired]=12 [inputChartOption]=businessReportChartOption></app-charts>
+    </div>
+
+    <div *ngIf='currentAciveTab === "taxInvoice"'>
+        <h1>Tax Invoice</h1>
+    </div>
+
+    <div *ngIf='currentAciveTab === "salesReturn"'>
+        <app-charts [inputChartLabels] = salesReturnChartLabels [inputChartType] = salesReturnChartType 
+        [inputChartData] = salesReturnChartData [colorRequired]=12 [inputChartOption]=salesReturnChartOption></app-charts>
+    </div>
+
+    <div *ngIf='currentAciveTab === "totalSales"'>
+        <app-charts [inputChartLabels] = totalSalesChartLabels [inputChartType] = totalSalesChartType 
+        [inputChartData] = totalSalesChartData [colorRequired]=12 [inputChartOption]=totalSalesChartOption></app-charts>
+    </div>
+</div>

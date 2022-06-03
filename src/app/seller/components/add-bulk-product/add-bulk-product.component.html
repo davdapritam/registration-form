@@ -1,0 +1,186 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="products">
+        <div class="form-group mb-3 col-12 col-md-6">
+          <label for="productCategory" class="label-control mb-1">Product Category</label>
+          <div *ngIf="productCategoryList && productCategoryList.length > 0">
+            <select class="form-select" aria-label="Product Category" (change)="selectProductCategory($event)" formControlName="product_category">
+              <ng-container *ngFor="let category of productCategoryList;">
+                <option [value]="category._id">{{category.name}}</option>
+              </ng-container>
+            </select>
+          </div>
+          <div *ngIf="products.controls['product_category'].invalid && products.controls['product_category'].touched">
+            <div *ngIf="products.controls['product_category'].errors" class="text-danger text-end">
+              {{errorHandler('Product Category', products.controls['product_category'].errors)}}
+            </div>
+          </div>
+        </div>
+        <div formArrayName="product">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Type</th>
+                <th scope="col">Product Quality</th>
+                <th scope="col">Manager Name</th>
+                <th scope="col">Product Desc</th>
+                <th scope="col">Color</th>
+                <th scope="col">HSN Code</th>
+                <th scope="col">GST%</th>
+                <th scope="col">Available Stock</th>
+                <th scope="col delivery-rate">COD</th>
+                <th scope="col delivery-rate">7 Days</th>
+                <th scope="col delivery-rate">30 Days</th>
+                <th scope="col delivery-rate">45 Days</th>
+                <th scope="col delivery-rate">#</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let prod of getProduct; let i = index" [formGroupName]="i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                  <div class="form-group">
+                    <input type="text" formControlName="product_type" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'product_type') }">
+                    <div *ngIf="checkValidation(prod, 'product_type')">
+                      <div *ngIf="checkValidation(prod, 'product_type')" class="text-danger text-end">
+                        {{errorHandler('Product Type', formControlErrorReturn(prod, 'product_type'))}}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <!-- <input type="text" formControlName="product_quality" class="form-control"> -->
+                    <select class="form-select" aria-label="Product Category" formControlName="product_quality">
+                      <ng-container *ngFor="let quality of productQualityList;">
+                        <option [value]="quality._id">{{quality.name}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                      <input type="text" formControlName="manager_name" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'manager_name') }">
+                      <div *ngIf="checkValidation(prod, 'manager_name')">
+                        <div *ngIf="checkValidation(prod, 'manager_name')" class="text-danger text-end">
+                          {{errorHandler('Manager Name', formControlErrorReturn(prod, 'manager_name'))}}
+                        </div>
+                      </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" formControlName="product_desc" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'product_desc') }">
+                      <div *ngIf="checkValidation(prod, 'product_desc')">
+                        <div *ngIf="checkValidation(prod, 'product_desc')" class="text-danger text-end">
+                          {{errorHandler('Product description', formControlErrorReturn(prod, 'product_desc'))}}
+                        </div>
+                      </div>
+                    <!-- <input type="text" formControlName="product_desc" class="form-control"> -->
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" formControlName="product_color" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'product_color') }">
+                      <div *ngIf="checkValidation(prod, 'product_color')">
+                        <div *ngIf="checkValidation(prod, 'product_color')" class="text-danger text-end">
+                          {{errorHandler('Product color', formControlErrorReturn(prod, 'product_color'))}}
+                        </div>
+                      </div>
+                    <!-- <input type="text" formControlName="product_color" class="form-control"> -->
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="number" formControlName="product_hsn" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'product_hsn') }" maxlength="8">
+                      <div *ngIf="checkValidation(prod, 'product_hsn')">
+                        <div *ngIf="checkValidation(prod, 'product_hsn')" class="text-danger text-end">
+                          {{errorHandler('Product HSN', formControlErrorReturn(prod, 'product_hsn'))}}
+                        </div>
+                      </div>
+                    <!-- <input type="text" formControlName="product_hsn" class="form-control"> -->
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="number" formControlName="product_gst" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'product_gst') }" maxlength="8">
+                      <div *ngIf="checkValidation(prod, 'product_gst')">
+                        <div *ngIf="checkValidation(prod, 'product_gst')" class="text-danger text-end">
+                          {{errorHandler('GST', formControlErrorReturn(prod, 'product_gst'))}}
+                        </div>
+                      </div>
+                    <!-- <input type="text" formControlName="product_gst" class="form-control"> -->
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="number" formControlName="product_stock" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'product_stock') }" maxlength="8">
+                      <div *ngIf="checkValidation(prod, 'product_stock')">
+                        <div *ngIf="checkValidation(prod, 'product_stock')" class="text-danger text-end">
+                          {{errorHandler('Product stock', formControlErrorReturn(prod, 'product_stock'))}}
+                        </div>
+                      </div>
+                    <!-- <input type="text" formControlName="product_stock" class="form-control"> -->
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" formControlName="product_cod" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'product_cod') }" maxlength="8">
+                      <div *ngIf="checkValidation(prod, 'product_cod')">
+                        <div *ngIf="checkValidation(prod, 'product_cod')" class="text-danger text-end">
+                          {{errorHandler('Product stock', formControlErrorReturn(prod, 'product_cod'))}}
+                        </div>
+                      </div>
+                    <!-- <input type="text" formControlName="product_cod" class="form-control delivery-rate"> -->
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" formControlName="product_7day" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'product_7day') }" maxlength="8">
+                      <div *ngIf="checkValidation(prod, 'product_7day')">
+                        <div *ngIf="checkValidation(prod, 'product_7day')" class="text-danger text-end">
+                          {{errorHandler('7 day', formControlErrorReturn(prod, 'product_7day'))}}
+                        </div>
+                      </div>
+                    <!-- <input type="text" formControlName="product_7day" class="form-control delivery-rate"> -->
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" formControlName="product_30day" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'product_30day') }" maxlength="8">
+                      <div *ngIf="checkValidation(prod, 'product_30day')">
+                        <div *ngIf="checkValidation(prod, 'product_30day')" class="text-danger text-end">
+                          {{errorHandler('30 day', formControlErrorReturn(prod, 'product_30day'))}}
+                        </div>
+                      </div>
+                    <!-- <input type="text" formControlName="product_30day" class="form-control delivery-rate"> -->
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" formControlName="product_45day" class="form-control" [ngClass]="{'is-invalid': checkValidation(prod, 'product_45day') }" maxlength="8">
+                      <div *ngIf="checkValidation(prod, 'product_45day')">
+                        <div *ngIf="checkValidation(prod, 'product_45day')" class="text-danger text-end">
+                          {{errorHandler('45 day', formControlErrorReturn(prod, 'product_45day'))}}
+                        </div>
+                      </div>
+                    <!-- <input type="text" formControlName="product_45day" class="form-control delivery-rate"> -->
+                  </div>
+                </td>
+                <td>
+                  <i class="fa fa-times cursor-pointer" (click)="removeOrClearProduct(i)" aria-hidden="true"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="form-group col-sm-4 col-md-2 col-lg-2">
+            <button type="button" (click)="addNewProduct()" class="btn btn-success">Add New Item</button>
+            <button type="button" (click)="submitProduct()" class="btn btn-success">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

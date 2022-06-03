@@ -1,0 +1,110 @@
+<section fxLayout="column" fxLayoutAlign.gt-sm="start center" fxLayoutAlign="center center" fxFlex="100%" [style.paddingLeft.px]="8" [style.paddingRight.px]="8">
+
+    <form fxLayout="column" fxLayoutAlign.gt-sm="start center" fxLayoutGap="16px" [formGroup]="userDetailForm" *ngIf="userDetailForm" [style.paddingBottom.px]="64" (ngSubmit)="update()" [style.width.%]="100">
+    
+        <mat-card *ngIf="(isMobile$ | async) as isMobile" [style.width]="isMobile.mobile ? '100%' : '650px'" [class.mat-elevation-z0]="isMobile.mobile" [class.card-border]="isMobile.mobile">
+            <mat-card-title>
+                General Information
+                <mat-slide-toggle formControlName="approved"></mat-slide-toggle>
+            </mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign.gt-sm="start center" fxLayoutGap="16px">
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign="start center" fxLayoutGap="16px">
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput type="tel" formControlName="mobile">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" type="email">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign="start center" fxLayoutGap="16px">
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>Pan Number</mat-label>
+                        <input matInput formControlName="PANNumber" type="text">
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>Toppings</mat-label>
+                        <mat-select formControlName="role">
+                          <mat-option *ngFor="let role of ['SELLER']" [value]="role">{{role}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    
+        <mat-card formGroupName="bank" *ngIf="(isMobile$ | async) as isMobile" [style.width]="isMobile.mobile ? '100%' : '650px'" [class.mat-elevation-z0]="isMobile.mobile" [class.card-border]="isMobile.mobile">
+            <mat-card-title>Bank Information</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign="start center" fxLayoutGap="16px">
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>Bank Name</mat-label>
+                        <input matInput formControlName="bankName">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>Account Number</mat-label>
+                        <input matInput formControlName="accountNumber" type="number">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign="start center" fxLayoutGap="16px">
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>IFSC Code</mat-label>
+                        <input matInput formControlName="ifscCode" type="number">
+                    </mat-form-field>
+                    <div fxFlex="100%"></div>
+                    <!-- <mat-form-field appearance="outline" fxFlex="100%">
+                        <mat-label>Bank Name</mat-label>
+                        <input matInput formControlName="bankName">
+                    </mat-form-field> -->
+                </div>
+            </mat-card-content>
+        </mat-card>
+    
+        <mat-card formGroupName="firm" *ngIf="(isMobile$ | async) as isMobile" [style.width]="isMobile.mobile ? '100%' : '650px'" [class.mat-elevation-z0]="isMobile.mobile" [class.card-border]="isMobile.mobile">
+            <mat-card-title>Firm Information</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-card-content fxLayout="column">
+                <div fxLayout="row" fxLayout.lt-sm="column" fxlayoutAlign="start center" fxLayoutGap="16px">
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>Firm Name</mat-label>
+                        <input matInput formControlName="firmName">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" [style.width.%]="100">
+                        <mat-label>GST Number</mat-label>
+                        <input matInput formControlName="GSTNumber" type="text">
+                    </mat-form-field>
+                </div>
+                <mat-form-field appearance="outline" [style.width.%]="100">
+                    <mat-label>Address</mat-label>
+                    <textarea matInput formControlName="address"></textarea>
+                </mat-form-field>
+            </mat-card-content>
+            <!-- <mat-card-actions>
+                <button mat-flat-button type="button">
+                    Cancel
+                </button>
+                <button mat-flat-button type="submit" color="primary">
+                    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+                        <span> Login </span>
+                        <mat-spinner color="accent" *ngIf="isApiCalling" [diameter]="20"></mat-spinner>
+                    </div>
+                </button>
+            </mat-card-actions> -->
+        </mat-card>
+    
+    </form>
+
+</section>

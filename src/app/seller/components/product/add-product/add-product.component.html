@@ -1,0 +1,333 @@
+<form [formGroup]="productFG">
+    <section class="upper section">
+
+        <section fxLayout="row" fxLayoutGap="16px">
+
+            <mat-form-field appearance="outline">
+                <mat-label>Product Category</mat-label>
+                <input type="text" placeholder="Product Category" aria-label="product-category" matInput
+                    formControlName="productCategory" name="productCategory" [matAutocomplete]="productCategoryAuto">
+                <mat-autocomplete autoActiveFirstOption #productCategoryAuto="matAutocomplete">
+                    <mat-option *ngFor="let option of []" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Product Name</mat-label>
+                <input type="text" placeholder="Product Name" aria-label="product-name" matInput
+                    formControlName="mainProductName" [matAutocomplete]="productNameAuto">
+                <mat-autocomplete autoActiveFirstOption #productNameAuto="matAutocomplete">
+                    <mat-option *ngFor="let option of []" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <input type="text" placeholder="Product Description" aria-label="product-name" matInput
+                    formControlName="description" name="description" [matAutocomplete]="productNameAuto">
+                <mat-autocomplete autoActiveFirstOption #productNameAuto="matAutocomplete">
+                    <mat-option *ngFor="let option of []" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>HSN Code</mat-label>
+                <input type="text" placeholder="HSN Code" aria-label="hsn-code" matInput name="hsnCode" formControlName="hsnCode">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>HSN Rate</mat-label>
+                <input type="number" placeholder="HSN Rate" aria-label="hsn-rate" matInput name="hsnRate" formControlName="hsnRate">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>GST</mat-label>
+                <input type="number" placeholder="HSN Code" aria-label="hsn-code" matInput formControlName="gst"
+                    name="gst">
+                <mat-icon matSuffix>percent</mat-icon>
+            </mat-form-field>
+
+        </section>
+
+        <!-- Template -->
+        <!-- <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container> -->
+
+        <!-- Main Section To Work With -->
+
+        <div class="mat-table-wrapper">
+            <table mat-table [dataSource]="subProductFA.controls" #subProductFATable>
+
+                <!-- SUB PRODUCT NAME -->
+                <ng-container matColumnDef="sub_product">
+                    <th mat-header-cell *matHeaderCellDef fxFlex="250px">Sub Product Name</th>
+                    <td mat-cell *matCellDef="let subProductFG; let index = index; let last = last"
+                        [formGroup]="subProductFG" class="matcell">
+                        <!-- {{ dataD(subProductFA.controls) }} -->
+
+                        <div fxLayout="column" class="matcell">
+                            <mat-form-field appearance="outline" fxFlex="100%">
+                                <mat-label>Sub Product Name</mat-label>
+                                <input type="text" placeholder="Sub Product Name" aria-label="sub-product-name" matInput
+                                    formControlName="name" name="name"
+                                    [matAutocomplete]="subProductNameAuto">
+                                <mat-autocomplete autoActiveFirstOption #subProductNameAuto="matAutocomplete">
+                                    <mat-option *ngFor="let option of []" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <div>
+                                <button mat-button color="warn" [disabled]="subProductFA.controls.length === 1"
+                                    (click)="removeSubProductFG(subProductFATable, index)"> Remove </button>
+
+                                <button mat-flat-button *ngIf="last" color="primary"
+                                    (click)="addSubProductFG(subProductFATable)"> Add </button>
+
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- SUB PRODUCT UNITS TABLE -->
+                <ng-container matColumnDef="sizes">
+                    <th mat-header-cell *matHeaderCellDef fxFlex="250px">Sub Product Units</th>
+
+                    <td mat-cell *matCellDef="let subProductFG" [formGroup]="subProductFG">
+
+                        <table mat-table [dataSource]="subProductFG?.get('sizes')?.controls"
+                            #subProductUnitFATable>
+
+                            <!-- SUB PRODUCT UNITS -->
+                            <ng-container matColumnDef="name_name">
+
+                                <!-- {{ dataD(subProductFG) }} -->
+                                <td mat-cell *matCellDef='let subProductUnits; let i = index, let l = last' class="margin"
+                                    [formGroup]="subProductUnits" fxFlex="250px">
+
+
+                                    <div fxLayout="column" class="matcell">
+
+                                        <mat-form-field class="mat-form-field" appearance="outline" fxFlex="100%">
+                                            <mat-label>Sub Product Units</mat-label>
+                                            <input type="text" placeholder="Sub Product Name"
+                                                aria-label="sub-product-name" matInput
+                                                formControlName="name" name="name"
+                                                [matAutocomplete]="subProductNameAuto">
+                                            <mat-autocomplete autoActiveFirstOption
+                                                #subProductNameAuto="matAutocomplete">
+                                                <mat-option *ngFor="let option of []" [value]="option">
+                                                    {{option}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                        <div>
+
+                                            <button mat-button color="warn" [disabled]="subProductFG?.get('sizes')?.controls.length === 1"
+                                                (click)="removeSubProductUnits(subProductFG, i, subProductUnitFATable)"> Remove </button>
+                                            <button mat-flat-button color="primary" *ngIf="l"
+                                                (click)="addSubProductUnitFG(subProductFG, subProductUnitFATable)">Add</button>
+
+                                        </div>
+                                    </div>
+
+
+                                </td>
+                            </ng-container>
+
+                            <!-- SUB PRODUCT DETAIL TABLE -->
+                            <ng-container matColumnDef="sub_product_detail">
+                                <th mat-header-cell *matHeaderCellDef fxFlex="250px">Sub Product Additional Details</th>
+                                <td mat-cell *matCellDef="let subProductDetail"
+                                    [formGroup]="subProductDetail">
+                                    <!-- {{ dataD(subProductDetail.get('sizeDescription').controls) }} -->
+
+                                    <table mat-table
+                                        [dataSource]="subProductDetail?.get('sizeDescription')?.controls"
+                                        class="subProductAdditionalFATable" #subProductAdditionalFATable>
+
+                                        <ng-container matColumnDef="lusterName">
+
+                                            <td mat-cell *matCellDef="let element; let index = index; let last_add = last" [formGroup]="element" fxFlex="150px">
+
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>Luster</mat-label>
+                                                    <input type="text" placeholder="Luster" aria-label="lusterName" matInput
+                                                        formControlName="lusterName" name="lusterName">
+                                                </mat-form-field>
+
+                                                <div class="additional_button">
+
+                                                    <button mat-flat-button color="warn" [disabled]="subProductDetail?.get('sizeDescription')?.controls.length === 1"
+                                                        (click)="removeSubProductAdditionalInfo(subProductDetail, index, subProductAdditionalFATable)">
+                                                        <mat-icon>remove</mat-icon>
+                                                    </button>
+                                                    <button mat-flat-button color="primary" *ngIf="last_add"
+                                                        (click)="addSubProductAdditionalInfo(subProductDetail?.get('sizeDescription')?.controls, subProductAdditionalFATable)">
+                                                        <mat-icon>add</mat-icon>
+                                                    </button>
+
+                                                </div>
+
+                                            </td>
+
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="colours">
+
+                                            <td mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="130px">
+
+                                                <mat-form-field appearance="outline" fxFlex="100px">
+                                                    <mat-label>colours</mat-label>
+                                                    <input type="text" placeholder="colours" aria-label="colours" matInput
+                                                        formControlName="colours" name="colours">
+                                                </mat-form-field>
+
+                                            </td>
+
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="availableQty">
+
+                                            <td mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="160px">
+
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>Available Stock</mat-label>
+                                                    <input type="number" placeholder="Available Stock"
+                                                        aria-label="available-stock" matInput
+                                                        formControlName="availableQty" name="availableQty">
+                                                </mat-form-field>
+
+                                            </td>
+
+                                        </ng-container>
+
+
+                                        <ng-container matColumnDef="codFinal_price">
+
+                                            <td mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="300px">
+
+                                                <div class="justify_middless">
+
+                                                    <mat-form-field appearance="outline" fxFlex="100%"
+                                                        style="width: 120px;">
+                                                        <mat-label>COD Discount Qt</mat-label>
+                                                        <input type="number" placeholder="COD Discount Qt"
+                                                            aria-label="cod-discount-quantity" matInput
+                                                            formControlName="codFinal" name="codFinal">
+                                                    </mat-form-field>
+                                                    <div>
+
+                                                        <mat-icon>forward</mat-icon>
+                                                    </div>
+
+                                                    <mat-form-field appearance="outline" fxFlex="100%"
+                                                        style="width: 150px;">
+                                                        <mat-label>COD Discount Price</mat-label>
+                                                        <input type="number" placeholder="COD Discount Price"
+                                                            aria-label="cod-discount-price" matInput
+                                                            formControlName="codComission"
+                                                            name="codComission">
+                                                    </mat-form-field>
+
+                                                </div>
+
+                                            </td>
+
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="sevenDaysFinal_price">
+
+                                            <td mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="400px">
+
+                                                <div class="justify_middless">
+
+                                                    <mat-form-field appearance="outline" fxFlex="100%">
+                                                        <mat-label>Seven Day Discount Qt</mat-label>
+                                                        <input type="number" placeholder="Seven Discount Qt"
+                                                            aria-label="seven-day-discount-quantity" matInput
+                                                            formControlName="sevenDaysFinal"
+                                                            name="sevenDaysFinal">
+                                                    </mat-form-field>
+
+                                                    <mat-icon>fast_forward</mat-icon>
+
+                                                    <mat-form-field appearance="outline" fxFlex="100%">
+                                                        <mat-label>Seven Day Discount Price</mat-label>
+                                                        <input type="number" placeholder="Seven Discount Price"
+                                                            aria-label="seven-discount-price" matInput
+                                                            formControlName="sevenDaysGSTOnProduct"
+                                                            name="sevenDaysGSTOnProduct">
+                                                    </mat-form-field>
+
+                                                </div>
+
+                                            </td>
+
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="thirtyDaysFinal_price">
+
+                                            <td mat-cell class="justify_middless" *matCellDef="let element"
+                                                [formGroup]="element" fxFlex="400px">
+                                                <div class="justify_middless">
+
+                                                    <mat-form-field appearance="outline" fxFlex="100%">
+                                                        <mat-label>Thirty Day Discount Qt</mat-label>
+                                                        <input type="number" placeholder="Thirty Discount Qt"
+                                                            aria-label="fifteen-day-discount-quantity" matInput
+                                                            formControlName="thirtyDaysFinal"
+                                                            name="thirtyDaysFinal">
+                                                    </mat-form-field>
+
+                                                    =>
+
+                                                    <mat-form-field appearance="outline" fxFlex="100%">
+                                                        <mat-label>Thirty Day Discount Price</mat-label>
+                                                        <input type="number" placeholder="Thirty Discount Price"
+                                                            aria-label="fifteen-discount-price" matInput
+                                                            formControlName="thirtyDaysGSTOnProduct"
+                                                            name="thirtyDaysGSTOnProduct">
+                                                    </mat-form-field>
+                                                </div>
+                                            </td>
+
+                                        </ng-container>
+
+                                        <tr mat-row
+                                            *matRowDef="let row; columns:desktopSubProductAdditionalDisplayedColumns">
+                                        </tr>
+                                    </table>
+                                </td>
+                            </ng-container>
+
+                            <!-- <tr mat-header-row *matHeaderRowDef="desktopSubProductColumns"></tr> -->
+                            <tr mat-row *matRowDef="let row; columns:desktopSubProductColumns"></tr>
+                        </table>
+
+                    </td>
+
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="desktopDisplayedColumns"></tr>
+
+                <tr class="table-main-row" mat-row *matRowDef="let row; columns: desktopDisplayedColumns"></tr>
+
+            </table>
+        </div>
+
+        <div>
+            <button mat-flat-button color="primary" class="bttn" (click)="insert_data(productFG.value)">Save</button>
+            <button mat-flat-button color="primary" class="bttn" (click)="update_data()">Save & Next</button>
+        </div>
+
+    </section>
+</form>

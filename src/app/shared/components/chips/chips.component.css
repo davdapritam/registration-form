@@ -1,0 +1,17 @@
+.chips{
+  width: fit-content;
+  background-color: #6ab190;
+  color: white;
+  padding: 5px !important;
+  border-radius: 20px;
+  list-style-type: none;
+}
+  
+.chipsContainer{
+  margin: 5px;
+  width: fit-content;
+  background-color: #6ab190;
+  color: white;
+  padding: 0 5px !important;
+  border-radius: 20px;
+}

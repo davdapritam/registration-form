@@ -1,0 +1,115 @@
+ <section fxLayout="column" *ngIf="{isMobile: isMobile$ | async} as data">
+
+    <mat-form-field appearance="outline" [style.width]="data.isMobile?.mobile ? '100%' : '250px'">
+        <mat-label>Search</mat-label>
+        <input matInput [formControl]="productSearchFC" cdkFocusInitial>
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-table [dataSource]="productData">
+
+        <ng-container matColumnDef="loader">
+            <mat-header-cell *matHeaderCellDef [style.width.%]="100" fxLayoutAlign="center center">
+                <mat-spinner [diameter]="30"></mat-spinner>
+            </mat-header-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="noData">
+            <mat-header-cell *matHeaderCellDef [style.width.%]="100" fxLayoutAlign="center center">
+                No Data Found.
+            </mat-header-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="productImage">
+            <mat-header-cell *matHeaderCellDef fxFlex="80px" [style.paddingLeft.px]="data.isMobile?.mobile ? 8 : 24"> </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutAlign="center center" fxFlex="80px" [style.paddingLeft.px]="data.isMobile?.mobile ? 8 : 24">
+            
+                <ng-template [ngIf]="!!element.productDocs.length" [ngIfElse]="noImage">
+
+                    <img [src]="element.productDocs[0]?.imageURL" height="48px" width="48px">
+
+                </ng-template>
+
+                <ng-template #noImage>
+                    ---
+                </ng-template>
+
+                
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="productName">
+            <mat-header-cell *matHeaderCellDef > Product Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.productName.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="productCategory">
+            <mat-header-cell *matHeaderCellDef > Product Category </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.productCategory.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef > Description </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.description }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="hsnCode">
+            <mat-header-cell *matHeaderCellDef > HSN Code </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.hsnCode }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="availableStock">
+            <mat-header-cell *matHeaderCellDef > Stock </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.availableStock }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef [fxFlex]="data.isMobile?.mobile ? '90px' : '120px'" [style.paddingRight.px]="data.isMobile?.mobile ? 8 : 24"> Action </mat-header-cell>
+            <mat-cell *matCellDef="let element" [fxFlex]="data.isMobile?.mobile ? '90px' : '120px'" [style.paddingRight.px]="data.isMobile?.mobile ? 8 : 24">
+                <div>
+                    <button mat-icon-button [routerLink]="element._id" queryParamsHandling="merge">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button *ngIf="!element.approved" mat-icon-button color="primary" (click)="approvedProduct(element._id, true)">
+                        <mat-icon>check</mat-icon>
+                    </button>
+                    <button *ngIf="element.approved" mat-icon-button color="warn" (click)="approvedProduct(element._id, false)">
+                        <mat-icon>block</mat-icon>
+                    </button>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="details">
+            <mat-header-cell *matHeaderCellDef [style.paddingLeft.px]="8"> Details </mat-header-cell>
+            <mat-cell *matCellDef="let element" [style.paddingLeft.px]="8">
+                <div fxLayout="column" [style.paddingTop.px]="2" [style.paddingBottom.px]="2">
+                    <label class="subheading-2"><b> {{ element.productName.name }} </b> </label>
+                    <label class="subheading-1"> {{ element.productCategory.name }} </label>
+                    <label class="body-2"> {{ element.description }} </label>
+                    <div fxLayout="row" fxLayoutGap="4px">
+                        <label class="body-2"> {{ element.hsnCode }}, </label>
+                        <label class="body-2 success-color"> {{ element.availableStock }} </label>
+                    </div>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+            <mat-cell *matCellDef="let element"> 
+
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="data.isMobile?.mobile ? mobileDisplayedColumns : desktopDisplayedColumns; sticky: true;"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="['loader']" fxHide [fxShow]="isApiCalling"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="['noData']" fxHide [fxShow]="!isApiCalling && !productData.length"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: data.isMobile?.mobile ? mobileDisplayedColumns : desktopDisplayedColumns;"></mat-row>
+        <!-- <mat-row *matRowDef="let row; columns: ['expandedDetail'];" class="expanded-detail-row"></mat-row> -->
+
+    </mat-table>
+
+    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="user paginator">
+    </mat-paginator>
+
+</section>

@@ -1,0 +1,17 @@
+:host {
+
+    .layout-container {
+        height: calc(100% - 64px);
+        // mat-drawer {
+        //     // width: 240px;
+        // }
+        // mat-drawer-content {
+        //     margin: 16px 16px 16px 256px !important;
+        // }
+        .primary-color {
+            color: #3f51b5;
+            background-color: #EEE6FF;
+            font-weight: bolder;
+        }
+    }
+}

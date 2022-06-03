@@ -1,0 +1,164 @@
+// :host {
+//     section {
+//         &:first-child {
+//             padding: 16px 16px 40px 16px;
+//         }
+//         .success-color {
+//             color: var(--themeLightGreen);
+//         }
+//         .mat-table-wrapper {
+//             width: 100%;
+//             overflow:scroll;
+//             mat-table {
+//                 width: 100%;
+//                 min-width: 2200px;
+//                 max-width: 2200px;
+//                 mat-row {
+//                     display: flex;
+//                     flex-direction: row;
+//                     justify-content: flex-start;
+//                     align-items: flex-start;
+//                 }
+//                 mat-header-cell, mat-cell {
+//                     padding: 8px 4px;
+//                 }
+//                 mat-form-field {
+//                     font-size: 12px;
+//                 }
+//                 .subProductAdditionalFATable {
+//                     mat-row {
+//                         &:last-child {
+//                             border-bottom: 0px;
+//                         }
+//                     }
+//                 }
+
+//                 .matcell{
+//                     max-height: 200px;
+//                 }
+
+//                 .give_margin{
+//                     margin: 9px 0px;
+//                 }
+
+//                 ng-container{
+//                     max-height: 100px;
+//                 }
+
+//                 .containerr{
+//                     display: flex;
+//                     flex-direction: column;
+//                 }
+//             }
+//         }
+
+//     }
+// }
+
+.table-main-row {
+    display: flex;
+    height: auto;
+}
+
+.upper {
+    margin: 20px;
+}
+
+.mat-table-wrapper {
+    margin-top: 100px;
+    width: 100%;
+    overflow: scroll;
+
+    table {
+        width: 100%;
+        display: flex;
+        box-shadow: none;
+        flex-direction: column;
+        overflow: scroll;
+        min-height: 160px;
+        height: auto;
+        width: auto;
+
+        tr {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: auto;
+        }
+
+        th,
+        td {
+            box-shadow: none;
+            padding: 8px 4px;
+        }
+
+        .mat-form-field {
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            min-height: 200px;
+            height: auto;
+            box-shadow: none;
+            margin-top: -8px;
+            margin-left: 10px;
+
+            tr {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                min-height: 140px;
+                height: auto;
+                box-shadow: none;
+            }
+            
+            table {
+                margin-top: -8px;
+                display: flex;
+                overflow:auto;
+                height: auto;
+                box-shadow: none;
+                
+                
+                td {
+                    max-width: 600px;
+                    display: flex;
+                    flex-direction: column;
+                    margin: 0px 10px;
+                    height: auto;
+
+                    max-width: 500px;
+                    
+                    
+                }
+                
+                ng-container{
+                    border: 2px solid black;
+                    max-width: 300px;
+                }
+            }
+        }
+        
+        
+    }
+}
+
+.justify_middless {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.bttn{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.subProductAdditionalFATable {
+    height: auto;
+}
+
