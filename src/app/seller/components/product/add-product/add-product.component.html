@@ -225,7 +225,6 @@
                                                             formControlName="codFinal" name="codFinal">
                                                     </mat-form-field>
                                                     <div>
-
                                                         <mat-icon>forward</mat-icon>
                                                     </div>
 
@@ -258,7 +257,9 @@
                                                             name="sevenDaysFinal">
                                                     </mat-form-field>
 
-                                                    <mat-icon>fast_forward</mat-icon>
+                                                    <div>
+                                                        <mat-icon>forward</mat-icon>
+                                                    </div>
 
                                                     <mat-form-field appearance="outline" fxFlex="100%">
                                                         <mat-label>Seven Day Discount Price</mat-label>
@@ -277,7 +278,7 @@
                                         <ng-container matColumnDef="thirtyDaysFinal_price">
 
                                             <td mat-cell class="justify_middless" *matCellDef="let element"
-                                                [formGroup]="element" fxFlex="400px">
+                                                [formGroup]="element" fxFlex="450px">
                                                 <div class="justify_middless">
 
                                                     <mat-form-field appearance="outline" fxFlex="100%">
@@ -288,7 +289,9 @@
                                                             name="thirtyDaysFinal">
                                                     </mat-form-field>
 
-                                                    =>
+                                                    <div>
+                                                        <mat-icon>forward</mat-icon>
+                                                    </div>
 
                                                     <mat-form-field appearance="outline" fxFlex="100%">
                                                         <mat-label>Thirty Day Discount Price</mat-label>
@@ -325,8 +328,8 @@
         </div>
 
         <div>
-            <button mat-flat-button color="primary" class="bttn" (click)="insert_data(productFG.value)">Save</button>
-            <button mat-flat-button color="primary" class="bttn" (click)="update_data()">Save & Next</button>
+            <button mat-flat-button color="primary" class="bttn" (click)="InsertData(productFG.value)">Save</button>
+            <button mat-flat-button color="primary" class="bttn" (click)="saveAndNext(productFG.value)">Save & Next</button>
         </div>
 
     </section>

@@ -12,7 +12,7 @@ export class WebRequestService {
   readonly ROOT_URL;
 
   constructor(private _http: HttpClient) {
-this.ROOT_URL = 'http://100.100.255.250:9000'
+this.ROOT_URL = 'http://192.168.139.90:9000'
   }
 
   sendProduct(data: any){

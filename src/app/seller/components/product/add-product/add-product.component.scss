@@ -55,6 +55,7 @@
 //     }
 // }
 
+
 .table-main-row {
     display: flex;
     height: auto;
@@ -64,10 +65,13 @@
     margin: 20px;
 }
 
+
 .mat-table-wrapper {
     margin-top: 100px;
     width: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
+    box-shadow: none;
+
 
     table {
         width: 100%;
@@ -142,6 +146,9 @@
         }
         
         
+    }
+    table::-webkit-scrollbar {
+        display: none;
     }
 }
 

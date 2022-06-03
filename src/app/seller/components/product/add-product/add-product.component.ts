@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatTable, MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BreakpointsService } from 'src/app/services/breakpoints.service';
 import { WebRequestService } from 'src/app/web-request.service';
@@ -70,7 +71,6 @@ export class AddProductComponent implements OnInit {
   ProductDetail !: FormGroup;
 
   desktopDisplayedColumns = ['sub_product', 'sizes'];
-  // desktopDisplayedColumns = ['sub_product', 'sizes', 'sub_product_detail'];
   
   desktopSubProductColumns = ['name_name', 'sub_product_detail'];
 
@@ -93,7 +93,8 @@ export class AddProductComponent implements OnInit {
   constructor(
     private breakpointsService: BreakpointsService,
     private cd: ChangeDetectorRef,
-    private webRequestService: WebRequestService
+    private webRequestService: WebRequestService,
+    private router: Router
   ) {
 
     this.productFG = this.createProductFG();
@@ -133,7 +134,6 @@ export class AddProductComponent implements OnInit {
 
     const fg: FormGroup = new FormGroup({
       name: new FormControl(d?.name || ''),
-      // name: new FormControl(d?.sizes || null),
       sizes: new FormArray([])
     });
 
@@ -167,7 +167,7 @@ export class AddProductComponent implements OnInit {
       codTCS: new FormControl(100),
       codTDS: new FormControl(100),
       codFinal: new FormControl(d?.codFinal || ''),
-      codComission: new FormControl(1),
+      codComission: new FormControl(d?.codComission || ''),
       codGSTOnProduct: new FormControl(1),
       codGSTOnComission: new FormControl(1),
       sevenDays: new FormControl(1),
@@ -204,8 +204,6 @@ export class AddProductComponent implements OnInit {
 
     t?.renderRows();
 
-    // this.subProductUnitFATable?.renderRows();
-
   }
 
   addSubProductAdditionalInfo(fg: FormArray, t?: MatTable<AbstractControl>): void {
@@ -236,7 +234,6 @@ export class AddProductComponent implements OnInit {
 
     t?.renderRows();
 
-    // this.subProductUnitFATable?.renderRows();
   }
 
   removeSubProductAdditionalInfo(fg: FormGroup, index: number, t?: MatTable<AbstractControl>): void {
@@ -258,21 +255,10 @@ export class AddProductComponent implements OnInit {
     this.show_subAdditional= true;
   }
 
-  insert_data(data: any){
+  InsertData(data: any){
 
-    // console.log(data);
-    console.log(this.productFG.value.subProducts[0].sizes[0].sizeDescription[0].colours.toString().split(','));
-
-    // console.log(data);
-    // const Product = data as object;
-    // console.log(Product);
-
-    // const ProductName= data.subProducts.forEach(item) as object;
-    // console.log(ProductName);
-
-    // const ProductUnit = ProductName;
-
-    const Product = data;
+    console.log("Product Data", data);
+    
 
     data?.subProducts.map((subProduct:any)=>{
      console.log("subProduct",subProduct);
@@ -291,20 +277,36 @@ export class AddProductComponent implements OnInit {
     
     return this.webRequestService.sendProduct(this.productFG.value).subscribe((obj: any) => {
       console.log("Response", obj);
+      console.log("Object Id", obj.data.productRecord)
     });
   }
 
-  update_data(){
+  saveAndNext(data: any){
 
-  }
+    console.log("Product Data", data);
+    
 
-  delete_data(){
+    data?.subProducts.map((subProduct:any)=>{
+     console.log("subProduct",subProduct);
+     subProduct.sizes.map((size:any)=>{
+       console.log("size",size);
+       size.sizeDescription.map((sizeDesc:any)=>{
+         console.log("sizeDesc",sizeDesc);
+         sizeDesc.colours = sizeDesc.colours.toString().split(",")
+         
+       })
+     })
+      
+    })
+    
+    console.log("Product",data);
+    
+    return this.webRequestService.sendProduct(this.productFG.value).subscribe((obj: any) => {
+      console.log("Response", obj);
+      this.router.navigate(['login']);
 
-  }
+    });
 
-  convertToArray(str: any){
-    console.log(str.toString().split(','));
-    return str.toString().split(',');
   }
 
 }
