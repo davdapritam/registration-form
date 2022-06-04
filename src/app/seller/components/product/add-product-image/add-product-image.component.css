@@ -1,0 +1,28 @@
+.dropZone{
+    border: dashed 1px #5e5b5b;
+    color: green;
+    margin: 20px 0px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fileDropRef {
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  }
+
+  .container{
+      width: 50%;
+  }
+
+  .browseBtn{
+      font-size: 18px;
+  }

@@ -109,7 +109,7 @@ export class SellerProfileComponent implements OnInit {
         this.userDetailsForm.removeControl('sellerRole');
         this.userDetailsForm.removeControl('referalCode');
       }
-
+ 
       this.firmDetailsForm.get('firmName')?.setValue(userDetail.firm.firmName);
       this.firmDetailsForm.get('GSTNumber')?.setValue(userDetail.firm.GSTNumber);
       this.firmDetailsForm.get('PANNumber')?.setValue(userDetail.PANNumber);

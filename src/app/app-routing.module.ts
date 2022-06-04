@@ -7,6 +7,7 @@ import { TermsAndConditionsComponent } from './components/terms-and-conditions/t
 import { NoAccessComponent } from './components/no-access/no-access.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ForbiddenAccessComponent } from './components/forbidden-access/forbidden-access.component';
+import { AddProductImageComponent } from './seller/components/product/add-product-image/add-product-image.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'privacyPolicy', component: PrivacyPolicyComponent },
   { path: 'noAccess', component: NoAccessComponent },
   { path: 'forbiddenAccess', component: ForbiddenAccessComponent },
+  {path: 'productDetails', component: AddProductImageComponent},
   { path: 'seller', loadChildren: () => import('./seller/seller.module').then(m => m.SellerModule) },
   { path: 'buyer', loadChildren: () => import('./buyer/buyer.module').then(m => m.BuyerModule) },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
