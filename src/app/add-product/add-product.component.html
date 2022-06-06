@@ -1,0 +1,360 @@
+<form [formGroup]="productFG">
+    <section>
+        <section fxLayout="row" fxLayoutGap="16px">
+
+            <mat-form-field appearance="outline">
+                <mat-label>Product Category</mat-label>
+                <input type="text" placeholder="Product Category" aria-label="product-category" matInput
+                    formControlName="product_category" name="product_category" [matAutocomplete]="productCategoryAuto">
+                <mat-autocomplete autoActiveFirstOption #productCategoryAuto="matAutocomplete">
+                    <mat-option *ngFor="let option of []" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Product Name</mat-label>
+                <input type="text" placeholder="Product Name" aria-label="product-name" matInput
+                    formControlName="product_name" [matAutocomplete]="productNameAuto">
+                <mat-autocomplete autoActiveFirstOption #productNameAuto="matAutocomplete">
+                    <mat-option *ngFor="let option of []" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>HSN Code</mat-label>
+                <input type="number" placeholder="HSN Code" aria-label="hsn-code" matInput formControlName="hsn_code">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>GST</mat-label>
+                <input type="number" placeholder="HSN Code" aria-label="hsn-code" matInput formControlName="hsn_code"
+                    name="hsn_code">
+                <mat-icon matSuffix>percent</mat-icon>
+            </mat-form-field>
+
+        </section>
+
+        <!-- Template -->
+        <!-- <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container> -->
+
+        <!-- Main Section To Work With -->
+
+        <div class="mat-table-wrapper">
+            <table mat-table [dataSource]="subProductFA.controls" #subProductFATable>
+
+
+                <!-- SUB PRODUCT NAME -->
+                <ng-container matColumnDef="sub_product">
+                    <th mat-header-cell *matHeaderCellDef fxFlex="250px">Sub Product Name</th>
+                    <td mat-cell *matCellDef="let subProductFG; let index = index; let last = last"
+                        [formGroup]="subProductFG" class="matcell">
+                        <!-- {{ dataD(subProductFA.controls) }} -->
+
+                        <div fxLayout="column" class="matcell">
+                            <mat-form-field appearance="outline" fxFlex="100%">
+                                <mat-label>Sub Product Name</mat-label>
+                                <input type="text" placeholder="Sub Product Name" aria-label="sub-product-name" matInput
+                                    formControlName="sub_product_name" name="sub_product_name"
+                                    [matAutocomplete]="subProductNameAuto">
+                                <mat-autocomplete autoActiveFirstOption #subProductNameAuto="matAutocomplete">
+                                    <mat-option *ngFor="let option of []" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                    </td>
+                </ng-container>
+
+                <!-- SUB PRODUCT UNITS TABLE -->
+                <ng-container matColumnDef="sub_product_units">
+                    <th mat-header-cell *matHeaderCellDef fxFlex="250px">Sub Product Units</th>
+
+                    <td mat-cell *matCellDef="let subProductFG" [formGroup]="subProductFG">
+
+                        <table mat-table [dataSource]="subProductFG?.get('sub_product_units')?.controls"
+                            #subProductUnitFATable>
+
+                            <!-- SUB PRODUCT UNITS -->
+                            <ng-container matColumnDef="sub_product_unit_name">
+
+                                {{ dataD(subProductFG) }}
+                                <td mat-cell *matCellDef='let subProductUnits' [formGroup]="subProductUnits"
+                                    fxFlex="250px">
+                                    <div fxLayout="column" class="matcell">
+                                        <mat-form-field appearance="outline" fxFlex="100%">
+                                            <mat-label>Sub Product Name</mat-label>
+                                            <input type="text" placeholder="Sub Product Name"
+                                                aria-label="sub-product-name" matInput
+                                                formControlName="sub_product_unit" name="sub_product_unit"
+                                                [matAutocomplete]="subProductNameAuto">
+                                            <mat-autocomplete autoActiveFirstOption
+                                                #subProductNameAuto="matAutocomplete">
+                                                <mat-option *ngFor="let option of []" [value]="option">
+                                                    {{option}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                        <div>
+                                            <button mat-flat-button color="primary">Add</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <!-- SUB PRODUCT DETAIL TABLE -->
+                            <ng-container matColumnDef="sub_product_detail">
+                                <th mat-header-cell *matHeaderCellDef fxFlex="250px">Sub Product Additional Details</th>
+                                <td mat-cell *matCellDef="let subProductDetail" [formGroup]="subProductDetail">
+                                    <!-- {{ dataD(subProductDetail.get('sub_product_additional_info').controls) }} -->
+                                    <table mat-table [dataSource]="subProductDetail?.get('sub_product_additional_info')?.controls">
+                                        <ng-container matColumnDef="luster" class="matcell" >
+                                            
+                                            <mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="200px" class="containerr">
+                                                luster
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>Luster</mat-label>
+                                                    <input type="text"
+                                                        placeholder="Luster"
+                                                        aria-label="luster"
+                                                        matInput
+                                                        formControlName="luster"
+                                                        name="luster"
+                                                        >
+                                                </mat-form-field>
+                                    
+                                                <button mat-flat-button color="primary" >+</button>
+                                                
+                                            </mat-cell>
+                                            
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="color">
+                                                                            
+                                            <mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="200px">
+                                    
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>Color</mat-label>
+                                                    <input type="text"
+                                                        placeholder="Color"
+                                                        aria-label="color"
+                                                        matInput
+                                                        formControlName="color"
+                                                        name="color"
+                                                        >
+                                                </mat-form-field>
+                                    
+                                            </mat-cell>
+                                
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="available_stock">
+                
+                                            <mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="100px">
+                                    
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>Available Stock</mat-label>
+                                                    <input type="number"
+                                                        placeholder="Available Stock"
+                                                        aria-label="available-stock"
+                                                        matInput
+                                                        formControlName="available_stock"
+                                                        name="available_stock"
+                                                        >
+                                                </mat-form-field>
+                                    
+                                            </mat-cell>
+                                
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="cod">
+                
+                                            <mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="100px">
+                                    
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>COD</mat-label>
+                                                    <input type="number"
+                                                        placeholder="COD"
+                                                        aria-label="cod"
+                                                        matInput
+                                                        formControlName="cod"
+                                                        name="cod"
+                                                        >
+                                                </mat-form-field>
+                                    
+                                            </mat-cell>
+                                
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="cod_discount_qt_price">
+                
+                                            <mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="300px">
+                                    
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>COD Discount Qt</mat-label>
+                                                    <input type="number"
+                                                        placeholder="COD Discount Qt"
+                                                        aria-label="cod-discount-quantity"
+                                                        matInput
+                                                        formControlName="cod_discount_qt"
+                                                        name="cod_discount_qt"
+                                                        >
+                                                </mat-form-field>
+                
+                                                <=
+                
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>COD Discount Price</mat-label>
+                                                    <input type="number"
+                                                        placeholder="COD Discount Price"
+                                                        aria-label="cod-discount-price"
+                                                        matInput
+                                                        formControlName="cod_discount_price"
+                                                        name="cod_discount_price"
+                                                        >
+                                                </mat-form-field>
+                                    
+                                            </mat-cell>
+                                
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="seven_day">
+                
+                                            <mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="100px">
+                                    
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>Seven Day</mat-label>
+                                                    <input type="number"
+                                                        placeholder="Seven Day"
+                                                        aria-label="seven-day"
+                                                        matInput
+                                                        formControlName="seven_day"
+                                                        name="seven_day"
+                                                        >
+                                                </mat-form-field>
+                                    
+                                            </mat-cell>
+                                
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="seven_day_discount_qt_price">
+                
+                                            <mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="300px">
+                                    
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>Seven Day Discount Qt</mat-label>
+                                                    <input type="number"
+                                                        placeholder="Seven Discount Qt"
+                                                        aria-label="seven-day-discount-quantity"
+                                                        matInput
+                                                        formControlName="seven_day_discount_qt"
+                                                        name="seven_day_discount_qt"
+                                                        >
+                                                </mat-form-field>
+                
+                                                <=
+                
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>Seven Day Discount Price</mat-label>
+                                                    <input type="number"
+                                                        placeholder="Seven Discount Price"
+                                                        aria-label="seven-discount-price"
+                                                        matInput
+                                                        formControlName="seven_day_discount_price"
+                                                        name="seven_day_discount_price"
+                                                        >
+                                                </mat-form-field>
+                                    
+                                            </mat-cell>
+                                
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="fifteen_day">
+                
+                                            <mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="100px">
+                                    
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>Fifteen Day</mat-label>
+                                                    <input type="number"
+                                                        placeholder="Fifteen Day"
+                                                        aria-label="fifteen-day"
+                                                        matInput
+                                                        formControlName="fifteen_day"
+                                                        name="fifteen_day"
+                                                        >
+                                                </mat-form-field>
+                                    
+                                            </mat-cell>
+                                
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="fifteen_day_discount_qt_price">
+                
+                                            <mat-cell *matCellDef="let element" [formGroup]="element" fxFlex="300px">
+                                    
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>fifteen Day Discount Qt</mat-label>
+                                                    <input type="number"
+                                                        placeholder="fifteen Discount Qt"
+                                                        aria-label="fifteen-day-discount-quantity"
+                                                        matInput
+                                                        formControlName="fifteen_day_discount_qt"
+                                                        name="fifteen_day_discount_qt"
+                                                        >
+                                                </mat-form-field>
+                
+                                                <=
+                
+                                                <mat-form-field appearance="outline" fxFlex="100%">
+                                                    <mat-label>fifteen Day Discount Price</mat-label>
+                                                    <input type="number"
+                                                        placeholder="fifteen Discount Price"
+                                                        aria-label="fifteen-discount-price"
+                                                        matInput
+                                                        formControlName="fifteen_day_discount_price"
+                                                        name="fifteen_day_discount_price"
+                                                        >
+                                                </mat-form-field>
+                                    
+                                            </mat-cell>
+                                
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="action">
+                
+                                            <mat-cell *matCellDef="let element; let index = index" [formGroup]="element" >
+                                    
+                                                <button mat-icon-button color="warn" [disabled]="index === 0"><mat-icon>remove</mat-icon></button>
+                                    
+                                            </mat-cell>
+                                
+                                        </ng-container>
+                                        <tr mat-row *matRowDef="let row; columns:desktopSubProductAdditionalDisplayedColumns"></tr>
+                                    </table>
+                                </td>
+                            </ng-container>
+
+                            <!-- <tr mat-header-row *matHeaderRowDef="desktopSubProductColumns"></tr> -->
+                            <tr mat-row *matRowDef="let row; columns:desktopSubProductColumns"></tr>
+                        </table>
+
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="desktopDisplayedColumns"></tr>
+
+                <tr class="table-main-row" mat-row *matRowDef="let row; columns: desktopDisplayedColumns"></tr>
+
+            </table>
+        </div>
+
+    </section>
+</form>

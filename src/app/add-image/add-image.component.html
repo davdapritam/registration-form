@@ -1,0 +1,18 @@
+<div class="container center">
+    
+  <div class="col-lg-4">
+    <div class="form-group">
+        <label style="margin-bottom: 21px;">
+            Profile <small>(Profile Image is greater than 1 mb)</small>
+        </label>
+        <label for="file-upload" class="custom-file-upload">
+            Select Image
+        </label><br>
+
+        <input type="file" name="profileImage" id="file-upload"  formControlName="profileImage" class="form-control-file"
+            ng2FileSelect [uploader]="profileUploader" (change)="onProfileChange($event)">
+        <p class="{{profileError?'warning':'p'}}">{{profile}}</p>
+    </div>
+</div>
+    
+</div>
